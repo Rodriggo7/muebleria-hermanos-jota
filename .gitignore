@@ -1,0 +1,93 @@
+# =========================================
+# Archivos del sistema y del editor
+# =========================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea/
+
+# =========================================
+# Backend - Node.js / Express
+# =========================================
+backend/node_modules/
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+backend/coverage/
+backend/dist/
+backend/build/
+backend/.cache/
+
+# Logs y archivos de depuracion de npm/Node
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+backend/pnpm-debug.log*
+backend/*.log
+
+# Archivos temporales generados por herramientas de desarrollo
+backend/.eslintcache
+backend/.stylelintcache
+backend/.nodemon.json
+
+# =========================================
+# Frontend - React (implementacion futura)
+# =========================================
+frontend/node_modules/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# Builds y artefactos de React, Vite, CRA y frameworks relacionados
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/out/
+frontend/.vite/
+frontend/.cache/
+frontend/.parcel-cache/
+frontend/coverage/
+
+# Logs y archivos de depuracion del frontend
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/*.log
+
+# =========================================
+# Reglas generales para proyectos JavaScript
+# =========================================
+node_modules/
+dist/
+build/
+coverage/
+.nyc_output/
+.eslintcache
+.stylelintcache
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Variables de entorno: versionar solo archivos de ejemplo
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Archivos temporales y de bloqueo de procesos
+*.tmp
+*.temp
+*.swp
+*.swo
+*.pid
+*.seed
