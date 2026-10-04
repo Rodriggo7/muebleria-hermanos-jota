@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:3001
+
+### Verificar que la API esté activa
+GET {{baseUrl}}/
+
+### Obtener todos los productos
+GET {{baseUrl}}/api/productos
+
+### Obtener un producto existente
+GET {{baseUrl}}/api/productos/1
+
+### Obtener otro producto existente
+GET {{baseUrl}}/api/productos/11
+
+### Intentar obtener un producto inexistente
+GET {{baseUrl}}/api/productos/999
+
+### Validar el comportamiento ante un identificador no válido
+GET {{baseUrl}}/api/productos/abc
