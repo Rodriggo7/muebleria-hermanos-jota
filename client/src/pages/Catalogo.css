@@ -1,0 +1,41 @@
+.catalogo-header {
+  background-color: var(--alabastro-calido);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.catalogo-badge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--siena-tostado);
+  font-weight: 600;
+}
+
+.catalogo-title {
+  font-family: var(--font-editorial);
+  font-size: 2rem;
+  color: var(--siena-tostado);
+  margin: 0.5rem 0;
+  text-transform: uppercase;
+}
+
+.catalogo-description {
+  color: var(--texto-secundario);
+  font-size: 0.95rem;
+  max-width: 600px;
+}
+
+.state-container {
+  text-align: center;
+  padding: 3rem 1rem;
+  background-color: var(--blanco);
+  border-radius: 12px;
+  margin-top: 1.5rem;
+}
+
+.state-message {
+  font-size: 1.1rem;
+  color: var(--texto-secundario);
+}
