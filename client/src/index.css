@@ -1,0 +1,44 @@
+/* client/src/index.css */
+
+/* Variables de Marca Hermanos Jota (RNF1, RNF2) */
+:root {
+  --siena-tostado: #A0522D;
+  --verde-salvia: #87A96B;
+  --alabastro-calido: #F5E6D3;
+  --vara-de-oro: #D4A437;
+  --rosa-polvoriento: #C47A6D;
+  
+  --font-principal: 'Inter', sans-serif;
+  --font-editorial: 'Playfair Display', serif;
+}
+
+/* Reset Global & Mobile First (RNF4) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-principal);
+  background-color: var(--alabastro-calido);
+  color: #2c2c2c;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Tipografía de títulos editoriales */
+h1, h2, h3, .editorial-title {
+  font-family: var(--font-editorial);
+  color: var(--siena-tostado);
+  letter-spacing: 0.05em;
+}
+
+button {
+  font-family: var(--font-principal);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border: none;
+}
