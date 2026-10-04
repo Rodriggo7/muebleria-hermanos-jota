@@ -5,13 +5,16 @@ import Footer from './components/Footer';
 import AppRouter from './routes/Router';
 
 export default function App() {
-  // Estado global para el carrito de compras (State Lifting)
   const [carrito, setCarrito] = useState([]);
+
+  const agregarAlCarrito = (producto) => {
+    setCarrito((prevCarrito) => [...prevCarrito, producto]);
+  };
 
   return (
     <BrowserRouter>
       <Navbar cartCount={carrito.length} />
-      <AppRouter carrito={carrito} setCarrito={setCarrito} />
+      <AppRouter carrito={carrito} onAddToCart={agregarAlCarrito} />
       <Footer />
     </BrowserRouter>
   );
