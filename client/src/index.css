@@ -1,18 +1,20 @@
-/* client/src/index.css */
-
-/* Variables de Marca Hermanos Jota (RNF1, RNF2) */
 :root {
   --siena-tostado: #A0522D;
+  --siena-oscuro: #823b18;
   --verde-salvia: #87A96B;
   --alabastro-calido: #F5E6D3;
+  --alabastro-claro: #fff8f3;
   --vara-de-oro: #D4A437;
   --rosa-polvoriento: #C47A6D;
-  
+  --texto-principal: #221a0f;
+  --texto-secundario: #54433c;
+  --blanco: #ffffff;
+  --sombra-suave: 0 4px 12px rgba(44, 24, 16, 0.06);
+
   --font-principal: 'Inter', sans-serif;
   --font-editorial: 'Playfair Display', serif;
 }
 
-/* Reset Global & Mobile First (RNF4) */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,24 +23,18 @@
 
 body {
   font-family: var(--font-principal);
-  background-color: var(--alabastro-calido);
-  color: #2c2c2c;
-  line-height: 1.6;
+  background-color: var(--alabastro-claro);
+  color: var(--texto-principal);
   min-height: 100vh;
+  line-height: 1.5;
 }
 
-/* Tipografía de títulos editoriales */
-h1, h2, h3, .editorial-title {
-  font-family: var(--font-editorial);
-  color: var(--siena-tostado);
-  letter-spacing: 0.05em;
-}
-
-button {
-  font-family: var(--font-principal);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  border: none;
+/* Contenedor principal de vistas */
+.page-container {
+  padding-top: 90px;
+  padding-bottom: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
