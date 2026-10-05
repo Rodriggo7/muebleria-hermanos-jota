@@ -12,7 +12,7 @@ export default function ProductCard({ producto, onAddToCart }) {
     <article className="product-card">
       <div className="card-image-container">
         <img 
-          src={producto.imagen || 'https://via.placeholder.com/300'} 
+          src={`/${producto.imagen}`} 
           alt={producto.nombre} 
           className="card-image"
         />

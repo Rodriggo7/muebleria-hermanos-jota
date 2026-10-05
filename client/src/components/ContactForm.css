@@ -90,3 +90,29 @@
   gap: 0.5rem;
   margin-top: 1rem;
 }
+
+.btn-submit,
+.form-select,
+.form-input {
+  cursor: pointer;
+}
+
+/* Ajuste del desplegable select porque se rompe en celulares */
+.form-select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--alabastro-calido);
+  background-color: var(--alabastro-claro);
+  font-family: var(--font-principal);
+  font-size: 0.95rem;
+  color: var(--texto-principal);
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23A0522D' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.25rem;
+}
