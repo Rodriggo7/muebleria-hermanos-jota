@@ -1,9 +1,16 @@
-# Backend — Mueblería Hermanos Jota
+# Mueblería Hermanos Jota
 
-API REST desarrollada con Node.js, Express y MongoDB mediante Mongoose.
+Aplicación web para la gestión y comercialización de muebles. El proyecto contempla un frontend desarrollado con React y una API REST desarrollada con Node.js, Express y MongoDB.
 
-## 1. Tecnologías
+## Estado del proyecto
 
+- **Backend:** implementado, integrado con MongoDB y con pruebas automatizadas.
+- **Frontend:** estructura inicial creada; desarrollo de interfaces y funcionalidades en curso.
+- **Integración y despliegue:** pendientes de la etapa final del proyecto.
+
+## Tecnologías
+
+### Backend
 - Node.js
 - Express
 - MongoDB Atlas
@@ -13,19 +20,62 @@ API REST desarrollada con Node.js, Express y MongoDB mediante Mongoose.
 - Jest
 - Supertest
 
-## 2. Instalación
+### Frontend
+- React
+- Vite
+- React Router
 
-Desde la carpeta raíz del proyecto:
+## Estructura del proyecto
+
+```text
+muebleria-hermanos-jota/
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── constants/
+│   │   ├── controllers/
+│   │   ├── middlewares/
+│   │   ├── models/
+│   │   ├── repositories/
+│   │   ├── routes/
+│   │   ├── scripts/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   └── validators/
+│   ├── tests/
+│   ├── .env.example
+│   └── package.json
+│
+├── client/
+│   ├── public/
+│   ├── src/
+│   └── package.json
+│
+├── .gitignore
+└── README.md
+```
+
+## Instalación
+
+Los comandos se ejecutan desde la carpeta raíz del proyecto.
+
+Instalar las dependencias del backend:
 
 ```powershell
 npm install --prefix .\backend
 ```
 
-## 3. Variables de entorno
+Instalar las dependencias del frontend:
 
-Crear un archivo `.env` dentro de `backend/`, tomando como referencia `.env.example`.
+```powershell
+npm install --prefix .\client
+```
 
-Configurar:
+## Configuración del backend
+
+Crear un archivo `.env` dentro de la carpeta `backend/`, tomando como referencia `backend/.env.example`.
+
+Configurar las siguientes variables:
 
 ```env
 PORT=4000
@@ -34,13 +84,18 @@ MONGO_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/hermanos_jota
 JWT_SECRET=colocar_un_secreto_seguro
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:5173
+ADMIN_NAME=Administrador Hermanos Jota
+ADMIN_EMAIL=admin@hermanosjota.com.ar
+ADMIN_PASSWORD=cambiar_por_password_seguro
 ```
 
 Reemplazar los valores de ejemplo por las credenciales correspondientes.
 
-**Importante:** no subir `.env` ni compartir contraseñas o secretos en el repositorio.
+**Importante:** no subir archivos `.env` al repositorio ni compartir contraseñas, credenciales o secretos.
 
-## 4. Ejecutar el servidor
+## Ejecución
+
+### Backend
 
 Desde la carpeta raíz:
 
@@ -52,106 +107,88 @@ El servidor se ejecuta en:
 
 `http://localhost:4000`
 
-Comprobar su funcionamiento:
+Para comprobar su funcionamiento:
 
 `http://localhost:4000/api/health`
 
-Respuesta esperada:
+### Frontend
 
-```json
-{
-  "success": true,
-  "message": "API de Mueblería Hermanos Jota funcionando correctamente"
-}
+Desde la carpeta raíz:
+
+```powershell
+npm run dev --prefix .\client
 ```
 
-## 5. Cargar datos iniciales
+Vite utiliza el puerto `5173` por defecto.
 
-Para ejecutar el script de carga de productos:
+## Datos iniciales
+
+### Productos
+
+Para cargar los productos iniciales en MongoDB:
 
 ```powershell
 npm run seed --prefix .\backend
 ```
 
-El script carga los productos iniciales en MongoDB.
+El script evita agregar duplicados cuando la colección ya contiene productos.
 
-## 6. Rutas disponibles
+### Administrador
 
-### Productos
+Para crear el usuario administrador inicial:
 
-| Método | Ruta | Descripción |
-|---|---|---|
-| GET | `/api/products` | Listar productos activos |
-| GET | `/api/products/categories` | Listar categorías |
-| GET | `/api/products/:id` | Obtener producto por ID |
+```powershell
+npm run seed:admin --prefix .\backend
+```
 
-Filtros disponibles para productos:
+La creación requiere configurar `ADMIN_EMAIL` y `ADMIN_PASSWORD` en el archivo `.env`.
 
-- `category`: filtrar por categoría.
-- `search`: buscar por nombre o descripción.
+Si el usuario ya existe, el script no lo modifica.
 
-Ejemplo:
+## Funcionalidades del backend
 
-`GET /api/products?category=comedor`
+- Gestión de productos y categorías.
+- Consulta de productos activos.
+- Búsqueda y filtrado de productos.
+- Creación, actualización y desactivación de productos.
+- Registro e inicio de sesión de usuarios.
+- Autenticación mediante JWT.
+- Protección de rutas privadas.
+- Control de acceso según roles.
+- Consulta y actualización del perfil de usuario.
+- Creación y consulta de pedidos.
+- Asociación de pedidos con usuarios autenticados.
+- Descuento de stock mediante operaciones transaccionales.
+- Consulta y administración de pedidos.
+- Recepción y administración de mensajes de contacto.
 
-### Contacto
+## Pruebas
 
-| Método | Ruta | Descripción |
-|---|---|---|
-| POST | `/api/contact` | Enviar mensaje de contacto |
-
-### Pedidos y administración
-
-Los servicios, controladores y rutas de pedidos y administración están desarrollados, pero su montaje en `app.js` queda pendiente de la integración con los middlewares definitivos de autenticación y autorización.
-
-Consultar `API_CONTRACTS.md` para conocer sus contratos.
-
-## 7. Pruebas
-
-Ejecutar las pruebas del backend:
+Ejecutar las pruebas automatizadas del backend:
 
 ```powershell
 npm test --prefix .\backend -- --runInBand
 ```
 
-Las pruebas cubren validaciones y lógica de productos, pedidos y contactos, incluida la creación transaccional de pedidos.
+Último resultado de ejecución:
 
-**Nota de integración:** `auth.test.js` todavía está pendiente de implementación por el responsable del módulo de autenticación. Hasta entonces, Jest puede informar un fallo por suite vacía aunque las demás pruebas pasen.
+- 6 suites aprobadas.
+- 55 pruebas aprobadas.
+- 0 pruebas fallidas.
 
-## 8. Estructura del backend
+Las pruebas cubren autenticación, productos, pedidos, lógica de negocio, contactos y operaciones transaccionales.
 
-```text
-backend/
-├── src/
-│   ├── config/
-│   ├── constants/
-│   ├── controllers/
-│   ├── middlewares/
-│   ├── models/
-│   ├── repositories/
-│   ├── routes/
-│   ├── scripts/
-│   ├── services/
-│   ├── utils/
-│   ├── validators/
-│   ├── app.js
-│   └── server.js
-├── tests/
-├── .env.example
-├── jest.config.js
-├── package.json
-└── README.md
-```
+## Documentación de la API
 
-## 9. Documentación relacionada
+Los contratos de los endpoints, métodos HTTP, parámetros, datos esperados y requisitos de autenticación se encuentran documentados en:
 
-- `API_CONTRACTS.md`: endpoints, parámetros, cuerpos de petición, respuestas y requisitos de autenticación.
-- `.env.example`: variables de entorno necesarias para configurar el proyecto.
+`backend/API_CONTRACTS.md`
 
-## 10. Responsabilidades
+## Seguridad
 
-- Productos, categorías y lógica de pedidos: Pablo.
-- Autenticación, registro, login, JWT y autorización: Rodri.
-- Integración final: Mateo.
-
-Los módulos deben respetar los contratos de `API_CONTRACTS.md` para facilitar la integración del frontend y del backend.
+- Las contraseñas se almacenan mediante hash de bcrypt.
+- La autenticación utiliza tokens JWT.
+- Las rutas privadas requieren autenticación.
+- Las operaciones administrativas requieren permisos de administrador.
+- Las credenciales y secretos se configuran mediante variables de entorno.
+- Los archivos `.env` están excluidos del repositorio mediante `.gitignore`.

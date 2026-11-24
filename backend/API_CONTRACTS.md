@@ -16,45 +16,9 @@ Parámetros opcionales:
 - `category`: filtra por categoría.
 - `search`: busca por nombre o descripción.
 
-Respuesta `200`:
-
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "_id": "ID_DEL_PRODUCTO",
-      "name": "Mesa de comedor",
-      "description": "Mesa de madera",
-      "price": 150000,
-      "category": "comedor",
-      "stock": 5,
-      "images": [],
-      "isActive": true
-    }
-  ]
-}
-```
-
 ### Listar categorías
 
 `GET /products/categories`
-
-Respuesta `200`:
-
-```json
-{
-  "success": true,
-  "data": [
-    { "value": "living", "label": "Living" },
-    { "value": "comedor", "label": "Comedor" },
-    { "value": "dormitorio", "label": "Dormitorio" },
-    { "value": "oficina", "label": "Oficina" },
-    { "value": "exterior", "label": "Exterior" },
-    { "value": "decoracion", "label": "Decoración" }
-  ]
-}
-```
 
 ### Obtener producto
 
@@ -66,7 +30,7 @@ Respuesta `404`: producto inexistente.
 
 ### Administración de productos
 
-Prefijo previsto: `/admin/products`.
+Prefijo: `/admin/products`.
 
 | Método | Ruta | Acción |
 |---|---|---|
@@ -128,7 +92,7 @@ Respuesta `201`:
 
 ### Administración de contactos
 
-Prefijo previsto: `/admin/contacts`.
+Prefijo: `/admin/contacts`.
 
 | Método | Ruta | Acción |
 |---|---|---|
@@ -231,7 +195,6 @@ Cuerpo:
 ```
 
 Estados admitidos:
-
 - `pending`
 - `processing`
 - `shipped`
@@ -240,7 +203,7 @@ Estados admitidos:
 
 ## 4. Autenticación, Usuarios y Administración
 
-Todas las contraseñas se almacenan encriptadas mediante `bcrypt` y **nunca** se devuelven en las respuestas de la API.
+Todas las contraseñas se almacenan mediante hash de `bcrypt` y nunca se devuelven en las respuestas de la API.
 
 El frontend debe enviar el token en las rutas protegidas mediante:
 
@@ -257,7 +220,7 @@ req.user = {
 };
 ```
 
-### 4.1. Autenticación (/auth)
+### 4.1. Autenticación (`/auth`)
 
 | Método | Ruta | Acceso | Acción |
 |---|---|---|---|
@@ -341,7 +304,7 @@ Requiere `Authorization: Bearer TOKEN_JWT`.
 
 Respuesta `200`: objeto del usuario autenticado dentro de `data` (sin `password`).
 
-### 4.2. Perfil de usuario (/users)
+### 4.2. Perfil de usuario (`/users`)
 
 Todas las rutas requieren autenticación (`authenticateToken`).
 
@@ -350,7 +313,7 @@ Todas las rutas requieren autenticación (`authenticateToken`).
 | GET | `/users/profile` | Obtener perfil del usuario autenticado |
 | PUT | `/users/profile` | Actualizar datos básicos (`name`, `phone`) |
 
-Cuerpo para actualizar perfil (`PUT /users/profile`):
+Cuerpo para actualizar perfil:
 
 ```json
 {
@@ -361,7 +324,7 @@ Cuerpo para actualizar perfil (`PUT /users/profile`):
 
 Solo se admiten `name` y `phone`. No permite modificar `role`, `email`, `password` ni `isActive`.
 
-### 4.3. Administración de usuarios (/admin/users)
+### 4.3. Administración de usuarios (`/admin/users`)
 
 Todas las rutas requieren autenticación y rol administrador (`authenticateToken` + `requireAdmin`).
 
@@ -372,7 +335,7 @@ Todas las rutas requieren autenticación y rol administrador (`authenticateToken
 | PATCH | `/admin/users/:id/role` | Modificar rol de un usuario (`user` o `admin`) |
 | PATCH | `/admin/users/:id/deactivate` | Desactivar cuenta de usuario (baja lógica `isActive: false`) |
 
-Cuerpo para cambiar rol (`PATCH /admin/users/:id/role`):
+Cuerpo para cambiar rol:
 
 ```json
 {
@@ -396,8 +359,6 @@ npm run seed:admin
 
 El script es idempotente: si el correo ya existe en la base de datos no realiza cambios.
 
----
-
 ## 5. Formato de errores
 
 Las respuestas de error deben conservar el formato centralizado del backend. Ejemplo:
@@ -416,14 +377,3 @@ Códigos utilizados:
 - `404`: recurso inexistente.
 - `409`: conflicto de recurso duplicado (ej. correo electrónico ya registrado).
 - `500`: error interno del servidor.
-
-## 6. Responsabilidades de integración
-
-| Módulo | Responsable |
-|---|---|
-| Productos, categorías y lógica de pedidos | Pablo |
-| Contacto y contratos de negocio | Pablo |
-| Registro, login, JWT y autorización | Rodri |
-| Frontend público, navegación y carrito | Maxi |
-| Diseño visual y CSS | Pam |
-| Integración final y entrega | Mateo |

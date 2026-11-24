@@ -1,3 +1,4 @@
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const createValidationError = (message) => {
@@ -61,6 +62,12 @@ export const validateLogin = (req, res, next) => {
 
   if (typeof password !== "string" || password.length === 0) {
     return next(createValidationError("La contraseña es obligatoria"));
+  }
+
+  if (password.length > 72) {
+    return next(
+      createValidationError("La contraseña no puede superar los 72 caracteres")
+    );
   }
 
   return next();

@@ -2,7 +2,7 @@
 import { isValidProductCategory } from "../constants/productCategories.js";
 
 const validateProduct = (req, res, next, isUpdate = false) => {
-  const { name, description, price, category, stock, images } = req.body;
+  const { name, description, price, category, stock, images } = req.body || {};
 
   const errors = [];
 

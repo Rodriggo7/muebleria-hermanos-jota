@@ -9,7 +9,7 @@ const createError = (message, statusCode) => {
 };
 
 export const createContact = async (data = {}) => {
-  const { name, email, phone, subject, message } = data;
+  const { name, email, phone, subject, message } = data ?? {};
 
   if (
     typeof name !== "string" ||
