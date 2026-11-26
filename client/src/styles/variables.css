@@ -1,0 +1,116 @@
+:root {
+  /* ---- Color · marca (manual p.5) ------------------------------------- */
+  --color-primary: #a0522d;        /* Siena Tostado — principal, títulos */
+  --color-secondary: #87a96b;      /* Verde Salvia — sustentabilidad */
+  --color-bg: #f5e6d3;             /* Alabastro Cálido — fondos */
+  --color-gold: #d4a437;           /* Vara de Oro — detalles premium */
+  --color-rose: #c47a6d;           /* Rosa Polvoriento — acentos suaves */
+
+  /* ---- Color · derivados (accesibilidad AA) ---------------------------
+     Salvia, oro y rosa NO alcanzan 4.5:1 como texto sobre claro.
+     Estas variantes oscuras se usan para texto/fondos con texto.      */
+  --color-primary-dark: #7f3f22;   /* hover/active del primario */
+  --color-secondary-dark: #5c7a45; /* texto y botones salvia (4.9:1 sobre blanco) */
+  --color-secondary-darker: #4a6338;
+  --color-rose-dark: #a5584b;      /* texto sobre fondos claros */
+
+  /* ---- Color · tintes para fondos suaves ------------------------------ */
+  --color-primary-tint: #f3e1d5;
+  --color-secondary-tint: #e8efe1;
+  --color-gold-tint: #faf0d4;
+  --color-rose-tint: #f6e3df;
+
+  /* ---- Color · superficies y texto ------------------------------------ */
+  --color-surface: #fffdf9;        /* tarjetas, header, formularios */
+  --color-bg-soft: #fbf4eb;        /* alternancia suave sobre el fondo */
+  --color-text: #3e2723;           /* marrón oscuro (títulos de sección del manual) */
+  --color-text-muted: #6b5248;     /* texto secundario (7:1 sobre blanco) */
+  --color-border: #e3cfb8;
+  --color-on-primary: #ffffff;
+
+  /* ---- Color · estados (no existen en el manual: derivados) ----------- */
+  --color-error: #9b2c2c;
+  --color-error-dark: #7a2020;
+  --color-error-tint: #fdeeee;
+  --color-success: var(--color-secondary-dark);
+  --color-success-tint: var(--color-secondary-tint);
+  --color-warning-text: #6b4e0a;
+  --color-warning-tint: var(--color-gold-tint);
+  --color-info-text: var(--color-primary-dark);
+  --color-info-tint: var(--color-primary-tint);
+
+  /* ---- Tipografía (manual p.7-8) -------------------------------------- */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+
+  --fw-light: 300;    /* leyendas y textos secundarios */
+  --fw-regular: 400;  /* texto principal */
+  --fw-medium: 500;   /* énfasis, botones */
+  --fw-bold: 700;     /* títulos, CTAs */
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+  --fs-3xl: clamp(1.75rem, 1.3rem + 2.2vw, 2.75rem);
+  --fs-4xl: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+
+  --lh-body: 1.6;
+  --lh-title: 1.2;
+
+  --ls-title: 0.1em;    /* títulos principales */
+  --ls-caption: 0.02em; /* leyendas */
+  --ls-button: 0.08em;  /* botones y CTAs */
+
+  /* ---- Espaciado (escala de 4px) -------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* ---- Layout --------------------------------------------------------- */
+  --container-max: 75rem;   /* 1200px */
+  --container-narrow: 40rem;
+  --gutter: var(--space-4);
+  --tap-target: 44px;       /* mínimo táctil recomendado */
+
+  /* ---- Radios --------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* ---- Sombras (cálidas, tono marrón) --------------------------------- */
+  --shadow-sm: 0 1px 2px rgb(62 39 35 / 8%);
+  --shadow-md: 0 4px 12px rgb(62 39 35 / 10%);
+  --shadow-lg: 0 12px 28px rgb(62 39 35 / 14%);
+  --shadow-focus: 0 0 0 3px rgb(160 82 45 / 30%);
+
+  /* ---- Transiciones --------------------------------------------------- */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ---- z-index -------------------------------------------------------- */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+
+@media (min-width: 768px) {
+  :root { --gutter: var(--space-5); }
+}
+@media (min-width: 1024px) {
+  :root { --gutter: var(--space-6); }
+}

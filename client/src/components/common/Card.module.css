@@ -1,0 +1,100 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition:
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+/* Variante plana: sin borde, fondo alabastro */
+.flat {
+  background-color: var(--color-surface-alt);
+  border-color: transparent;
+}
+
+/* Variante elevada: sombra en reposo */
+.elevated {
+  border-color: transparent;
+  box-shadow: var(--shadow-md);
+}
+
+/* Variante interactiva: toda la tarjeta responde al hover/foco/click */
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.interactive:active {
+  box-shadow: var(--shadow-xs);
+}
+
+.interactive:focus-within {
+  border-color: var(--color-primary-500);
+}
+
+/* Tarjeta seleccionada (ej: dirección o método de envío elegido) */
+.selected {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 1px var(--color-primary-500);
+}
+
+/* Encabezado de la tarjeta */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Cuerpo de la tarjeta */
+.body {
+  flex: 1;
+  padding: var(--space-4);
+}
+
+/* Pie de la tarjeta */
+.footer {
+  padding: var(--space-4);
+  background-color: var(--color-surface-sunken);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Estado cargando: muestra un brillo animado y bloquea la interacción */
+.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  transform: translateX(-100%);
+  animation: card-shimmer 1.4s infinite;
+}
+
+@keyframes card-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Desde tablet: más padding interno */
+@media (min-width: 768px) {
+  .header,
+  .body,
+  .footer {
+    padding: var(--space-5) var(--space-6);
+  }
+}

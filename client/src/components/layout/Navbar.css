@@ -1,0 +1,323 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Fila interna: logo · navegación · acciones */
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  height: var(--header-height);
+}
+
+/* Logo + nombre de la marca */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  color: var(--color-primary-700);
+  text-decoration: none;
+}
+
+/* Imagen del logo */
+.logo {
+  width: auto;
+  height: 2.25rem;
+  background: none;
+}
+
+/* Nombre de la marca (serif) */
+.brandName {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+}
+
+/* Botón hamburguesa (solo mobile) */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  margin-left: auto;
+  color: var(--color-primary-700);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.toggle:hover {
+  background-color: var(--color-primary-50);
+}
+
+.toggle:active {
+  background-color: var(--color-primary-100);
+}
+
+/* Las tres barras del icono hamburguesa */
+.toggleBar,
+.toggleBar::before,
+.toggleBar::after {
+  display: block;
+  width: 1.375rem;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition:
+    transform var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.toggleBar {
+  position: relative;
+}
+
+.toggleBar::before,
+.toggleBar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.toggleBar::before {
+  top: -7px;
+}
+
+.toggleBar::after {
+  top: 7px;
+}
+
+/* Botón abierto: las barras forman una X */
+.toggleOpen .toggleBar {
+  background-color: transparent;
+}
+
+.toggleOpen .toggleBar::before {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.toggleOpen .toggleBar::after {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Panel de navegación: oculto en mobile hasta abrir el menú */
+.nav {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  display: none;
+  padding-block: var(--space-2);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* Menú mobile abierto */
+.navOpen {
+  display: block;
+}
+
+/* Lista de enlaces */
+.navList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Cada enlace de navegación */
+.navLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  padding: var(--space-3) var(--gutter);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--color-primary-700);
+  background-color: var(--color-primary-50);
+}
+
+.navLink:active {
+  background-color: var(--color-primary-100);
+}
+
+/* Página actual: barra lateral en mobile, subrayado en desktop */
+.active {
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary-700);
+  background-color: var(--color-primary-50);
+  border-left-color: var(--color-primary-500);
+}
+
+/* Grupo de acciones a la derecha: cuenta y carrito */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Botón de acción del header (cuenta, carrito) */
+.actionLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: var(--tap-target);
+  height: var(--tap-target);
+  padding-inline: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-primary-700);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.actionLink:hover {
+  background-color: var(--color-primary-50);
+}
+
+.actionLink:active {
+  background-color: var(--color-primary-100);
+}
+
+/* Icono del carrito/cuenta */
+.actionIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Contador de ítems sobre el icono del carrito */
+.cartCount {
+  position: absolute;
+  top: 0.15rem;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding-inline: 0.3rem;
+  font-size: 0.6875rem;
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  color: var(--color-text-inverse);
+  background-color: var(--color-primary-500);
+  border: 2px solid var(--color-surface);
+  border-radius: var(--radius-pill);
+  box-sizing: content-box;
+}
+
+/* Contador vacío: se oculta si el carrito no tiene ítems */
+.cartCountEmpty {
+  display: none;
+}
+
+/* Fondo oscuro detrás del menú mobile abierto */
+.backdrop {
+  position: fixed;
+  inset: var(--header-height) 0 0 0;
+  z-index: calc(var(--z-header) - 1);
+  background-color: var(--color-overlay);
+}
+
+/* Texto del botón de cuenta: oculto en mobile, solo icono */
+.actionText {
+  display: none;
+}
+
+/* Tablet y superior: navegación en línea */
+@media (min-width: 768px) {
+  .toggle,
+  .backdrop {
+    display: none;
+  }
+
+  .brand {
+    margin-right: var(--space-4);
+  }
+
+  .brandName {
+    font-size: var(--text-xl);
+  }
+
+  .nav {
+    position: static;
+    display: block;
+    flex: 1;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .navList {
+    flex-direction: row;
+    gap: var(--space-2);
+  }
+
+  .navLink {
+    padding: var(--space-2) var(--space-3);
+    background: none;
+    border-left: 0;
+  }
+
+  .navLink::after {
+    content: "";
+    position: absolute;
+    right: var(--space-3);
+    bottom: 0.4rem;
+    left: var(--space-3);
+    height: 2px;
+    background-color: var(--color-primary-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+  }
+
+  .navLink:hover {
+    background: none;
+  }
+
+  .navLink:hover::after,
+  .active::after {
+    transform: scaleX(1);
+  }
+
+  .active {
+    background: none;
+  }
+}
+
+/* Desktop: más separación y texto en el botón de cuenta */
+@media (min-width: 1024px) {
+  .navList {
+    gap: var(--space-4);
+  }
+
+  .actionText {
+    display: inline;
+  }
+
+  .actionLink {
+    padding-inline: var(--space-3);
+  }
+}

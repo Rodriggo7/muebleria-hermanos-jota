@@ -1,0 +1,69 @@
+.quantity {
+  display: inline-flex;
+  align-items: stretch;
+  height: var(--tap-target);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+/* Botones − y + */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-target);
+  color: var(--color-primary-700);
+  transition: background-color var(--transition-fast);
+}
+
+.button:hover {
+  background-color: var(--color-primary-50);
+}
+
+.button:active {
+  background-color: var(--color-primary-100);
+}
+
+.button:disabled {
+  color: var(--color-disabled-text);
+  background-color: var(--color-disabled-bg);
+  cursor: not-allowed;
+}
+
+/* Valor numérico central */
+.value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  padding-inline: var(--space-2);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  border-inline: 1px solid var(--color-border);
+}
+
+/* Variante compacta para filas del carrito en mobile */
+.compact {
+  --tap-target: 2.25rem;
+}
+
+/* Estado error (ej: supera el stock) */
+.error {
+  border-color: var(--color-error-500);
+}
+
+/* Estado cargando: atenúa y bloquea mientras se actualiza el carrito */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Mensaje de límite bajo el control */
+.limit {
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
