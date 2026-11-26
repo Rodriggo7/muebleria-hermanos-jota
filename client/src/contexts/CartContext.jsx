@@ -8,6 +8,7 @@ const UPDATE_QUANTITY = 'UPDATE_QUANTITY';
 const REMOVE_ITEM = 'REMOVE_ITEM';
 const CLEAR = 'CLEAR';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext(null);
 
 // Stock máximo de un producto. Si la API no lo informa, no se pone tope.

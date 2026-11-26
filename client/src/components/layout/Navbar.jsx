@@ -17,7 +17,7 @@ const NAV_LINKS = [
 
 function UserIcon() {
   return (
-    <svg className="actionIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg className="actionIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="8" r="4" />
       <path d="M4 21a8 8 0 0 1 16 0" />
@@ -27,7 +27,7 @@ function UserIcon() {
 
 function LogoutIcon() {
   return (
-    <svg className="actionIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg className="actionIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
       <path d="M16 17l5-5-5-5" />
@@ -38,7 +38,7 @@ function LogoutIcon() {
 
 function CartIcon() {
   return (
-    <svg className="actionIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg className="actionIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="9" cy="20" r="1.25" />
       <circle cx="18" cy="20" r="1.25" />
