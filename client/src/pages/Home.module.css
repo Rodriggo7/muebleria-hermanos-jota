@@ -1,0 +1,295 @@
+.hero {
+  background-color: var(--color-surface-alt);
+  background-image: var(--texture-veta);
+  overflow: hidden;
+}
+
+/* Contenedor del hero: imagen arriba, texto abajo en mobile */
+.heroInner {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-6);
+  padding-block: var(--space-8) var(--space-10);
+}
+
+/* Bloque de texto del hero */
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+/* Titular principal */
+.heroTitle {
+  font-size: var(--text-display);
+  line-height: 1.05;
+  color: var(--color-primary-800);
+}
+
+/* Bajada del hero */
+.heroText {
+  max-width: 34rem;
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+}
+
+/* Botones del hero */
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* Marco de la imagen del hero */
+.heroMedia {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* Imagen del hero */
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Encabezado de sección: título + enlace "Ver todo" */
+.sectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+/* Título de sección */
+.sectionTitle {
+  font-size: var(--heading-2);
+}
+
+/* Descripción bajo el título de sección */
+.sectionText {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+/* Enlace "Ver todo" de la sección */
+.sectionLink {
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary-600);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.sectionLink:hover {
+  color: var(--color-primary-800);
+}
+
+/* Grilla de productos destacados */
+.featuredGrid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* Grilla de categorías */
+.categories {
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* Tarjeta de categoría: imagen completa con nombre encima */
+.categoryCard {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  color: var(--color-text-inverse);
+  text-decoration: none;
+  background-color: var(--color-primary-700);
+  border-radius: var(--radius-md);
+}
+
+/* Imagen de fondo de la categoría */
+.categoryImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.categoryCard:hover .categoryImage {
+  transform: scale(1.05);
+}
+
+/* Degradado inferior para que el texto blanco sea legible */
+.categoryOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(58, 29, 17, 0.85), rgba(58, 29, 17, 0) 65%);
+}
+
+/* Nombre de la categoría */
+.categoryName {
+  position: relative;
+  padding: var(--space-4);
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-inverse);
+}
+
+/* Lista de beneficios */
+.benefits {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+}
+
+/* Un beneficio: icono + texto */
+.benefit {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* Icono del beneficio */
+.benefitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-primary-700);
+  background-color: var(--color-primary-100);
+  border-radius: var(--radius-sm);
+}
+
+/* Título del beneficio */
+.benefitTitle {
+  margin-bottom: var(--space-1);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+}
+
+/* Texto del beneficio */
+.benefitText {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* Banner promocional: bloque de color con veta */
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-6);
+  color: var(--color-alabaster);
+  background-color: var(--color-primary-700);
+  background-image: var(--texture-veta-light);
+  border-radius: var(--radius-md);
+}
+
+/* Título del banner */
+.bannerTitle {
+  font-size: var(--heading-2);
+  color: var(--color-alabaster);
+}
+
+/* Texto del banner */
+.bannerText {
+  max-width: 36rem;
+  color: var(--color-primary-100);
+}
+
+/* Llamado a la acción final centrado */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+/* Texto del llamado final */
+.ctaText {
+  max-width: 34rem;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .featuredGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .benefits {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .banner {
+    padding: var(--space-10) var(--space-10);
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroInner {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-12);
+    padding-block: var(--space-16);
+  }
+
+  .heroContent,
+  .heroMedia {
+    flex: 1;
+  }
+
+  .heroMedia {
+    aspect-ratio: 5 / 4;
+  }
+
+  .featuredGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .categories {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .categoryCard {
+    aspect-ratio: 4 / 5;
+  }
+
+  .benefits {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1440px) {
+  .featuredGrid {
+    gap: var(--space-8);
+  }
+}

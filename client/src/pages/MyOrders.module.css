@@ -1,0 +1,60 @@
+.page { display: grid; gap: var(--space-5); padding-block: var(--space-6); }
+
+.list { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+
+.order {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.orderHeader { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.orderId { font-family: var(--font-serif); font-size: var(--fs-lg); color: var(--color-text); }
+.date { font-size: var(--fs-sm); font-weight: var(--fw-light); color: var(--color-text-muted); }
+
+/* ---- Estado del pedido (badge) ---------------------------------------- */
+.status {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-button);
+  text-transform: uppercase;
+  color: var(--color-info-text);
+  background-color: var(--color-info-tint);
+  border-radius: var(--radius-pill);
+}
+.statusPending { color: var(--color-warning-text); background-color: var(--color-warning-tint); }
+.statusProcessing { color: var(--color-rose-dark); background-color: var(--color-rose-tint); }
+.statusDelivered { color: var(--color-secondary-darker); background-color: var(--color-secondary-tint); }
+.statusCancelled { color: var(--color-error); background-color: var(--color-error-tint); }
+
+/* ---- Ítems del pedido -------------------------------------------------- */
+.items { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.itemRow { display: flex; justify-content: space-between; gap: var(--space-3); font-size: var(--fs-sm); }
+.itemName { min-width: 0; overflow-wrap: anywhere; }
+.itemQty { color: var(--color-text-muted); }
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  font-family: var(--font-serif);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ---- Estados ----------------------------------------------------------- */
+.empty { composes: empty-state from global; }
+.loading { display: grid; place-items: center; padding: var(--space-8); }
+.error { margin-block: var(--space-4); }
+
+@media (min-width: 768px) {
+  .order { padding: var(--space-5); }
+}

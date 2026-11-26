@@ -1,0 +1,47 @@
+.page { padding-block: var(--space-6); }
+.header { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
+.count { font-size: var(--fs-sm); font-weight: var(--fw-light); color: var(--color-text-muted); }
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding: var(--space-3);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.toolbar > * { flex: 1 1 10rem; }
+
+/* Chips de filtro por categoría */
+.filters { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.chip {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+@media (hover: hover) { .chip:hover { border-color: var(--color-primary); color: var(--color-primary); } }
+.chipActive, .chip[aria-pressed="true"] {
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-5);
+}
+
+/* ---- Estados ----------------------------------------------------------- */
+.empty { composes: empty-state from global; }
+.loading { display: grid; place-items: center; padding: var(--space-8); }
+.error { margin-block: var(--space-5); }

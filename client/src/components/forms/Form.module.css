@@ -1,0 +1,98 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+}
+
+/* Grupo temático de campos (ej: datos personales / dirección) */
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Título del grupo de campos */
+.legend {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-heading);
+}
+
+/* Fila de campos: apilados en mobile, lado a lado desde tablet */
+.row {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* Zona del error general del formulario (arriba del botón) */
+.formAlert {
+  margin: 0;
+}
+
+/* Fila de opciones: "Recordarme" y "Olvidé mi contraseña" */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+/* Enlace dentro de formularios */
+.link {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary-600);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.link:hover {
+  color: var(--color-primary-800);
+}
+
+/* Botones de envío */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Separador con texto central ("o") */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+/* Texto de cierre: "¿Ya tenés cuenta? Ingresá" */
+.footerText {
+  font-size: var(--text-sm);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+/* Formulario enviándose: bloquea la edición */
+.submitting {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+  .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

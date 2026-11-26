@@ -1,0 +1,166 @@
+.button {
+  --btn-bg: var(--color-primary-500);
+  --btn-bg-hover: var(--color-primary-600);
+  --btn-bg-active: var(--color-primary-700);
+  --btn-fg: var(--color-text-inverse);
+  --btn-border: transparent;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--btn-fg);
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.button:hover {
+  background-color: var(--btn-bg-hover);
+}
+
+.button:active {
+  background-color: var(--btn-bg-active);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+/* Variante secundaria: verde salvia oscuro (contraste AA con texto blanco) */
+.secondary {
+  --btn-bg: var(--color-secondary-700);
+  --btn-bg-hover: var(--color-secondary-800);
+  --btn-bg-active: var(--color-secondary-800);
+}
+
+/* Variante acento: dorado con texto oscuro, para llamados premium */
+.accent {
+  --btn-bg: var(--color-accent-500);
+  --btn-bg-hover: var(--color-accent-600);
+  --btn-bg-active: var(--color-accent-700);
+  --btn-fg: var(--color-neutral-900);
+}
+
+/* Variante contorno: acción secundaria sobre fondo claro */
+.outline {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--color-primary-50);
+  --btn-bg-active: var(--color-primary-100);
+  --btn-fg: var(--color-primary-600);
+  --btn-border: var(--color-primary-500);
+}
+
+/* Variante fantasma: acción terciaria sin borde */
+.ghost {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--color-primary-50);
+  --btn-bg-active: var(--color-primary-100);
+  --btn-fg: var(--color-primary-700);
+}
+
+/* Variante peligro: eliminar, vaciar carrito, cancelar pedido */
+.danger {
+  --btn-bg: var(--color-error-500);
+  --btn-bg-hover: var(--color-error-700);
+  --btn-bg-active: var(--color-error-700);
+}
+
+/* Tamaño chico */
+.sm {
+  min-height: 2.25rem;
+  padding: var(--space-1) var(--space-4);
+  font-size: var(--text-sm);
+}
+
+/* Tamaño grande (CTA principales) */
+.lg {
+  min-height: 3.25rem;
+  padding: var(--space-3) var(--space-8);
+  font-size: var(--text-md);
+}
+
+/* Ocupa todo el ancho de su contenedor */
+.fullWidth {
+  display: flex;
+  width: 100%;
+}
+
+/* Solo icono: botón cuadrado */
+.iconOnly {
+  width: var(--tap-target);
+  padding: 0;
+}
+
+/* Icono dentro del botón */
+.icon {
+  flex-shrink: 0;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* Estado cargando: oculta el texto y muestra spinner sin cambiar el ancho */
+.loading {
+  color: transparent;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: auto;
+  border: 2px solid var(--btn-fg);
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: button-spin 0.7s linear infinite;
+}
+
+/* Estado deshabilitado: nativo, aria-disabled o clase */
+.button:disabled,
+.button[aria-disabled="true"],
+.disabled {
+  color: var(--color-disabled-text);
+  background-color: var(--color-disabled-bg);
+  border-color: var(--color-border);
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@keyframes button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Desde tablet: botones un poco más generosos */
+@media (min-width: 768px) {
+  .button {
+    padding-inline: var(--space-8);
+  }
+
+  .sm {
+    padding-inline: var(--space-5);
+  }
+
+  .iconOnly {
+    padding: 0;
+  }
+}
