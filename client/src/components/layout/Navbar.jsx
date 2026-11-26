@@ -7,7 +7,45 @@ import * as authModule from '../../hooks/useAuth.js';
 const noAuth = () => ({ user: null, logout: () => {} });
 const useAuth = authModule.useAuth ?? authModule.default ?? noAuth;
 
-const linkClass = ({ isActive }) => (isActive ? 'navbar__link is-active' : 'navbar__link');
+const navLinkClass = ({ isActive }) => (isActive ? 'navLink active' : 'navLink');
+
+const NAV_LINKS = [
+  { to: '/', label: 'Inicio', end: true },
+  { to: '/productos', label: 'Productos' },
+  { to: '/contacto', label: 'Contacto' },
+];
+
+function UserIcon() {
+  return (
+    <svg className="actionIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21a8 8 0 0 1 16 0" />
+    </svg>
+  );
+}
+
+function LogoutIcon() {
+  return (
+    <svg className="actionIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <path d="M16 17l5-5-5-5" />
+      <path d="M21 12H9" />
+    </svg>
+  );
+}
+
+function CartIcon() {
+  return (
+    <svg className="actionIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="9" cy="20" r="1.25" />
+      <circle cx="18" cy="20" r="1.25" />
+      <path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 7H6" />
+    </svg>
+  );
+}
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,55 +60,72 @@ function Navbar() {
   };
 
   return (
-    <header className="navbar">
-      <Link to="/" className="navbar__brand" onClick={closeMenu}>
-        Hermanos Jota
-      </Link>
+    <>
+      <header className="header">
+        <div className="container inner">
+          <Link to="/" className="brand" onClick={closeMenu}>
+            <span className="brandName">Hermanos Jota</span>
+          </Link>
 
-      <button
-        type="button"
-        className="navbar__toggle"
-        aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
-        aria-expanded={isOpen}
-        aria-controls="navbar-menu"
-        onClick={() => setIsOpen((open) => !open)}
-      >
-        <span className="navbar__toggle-bar" />
-        <span className="navbar__toggle-bar" />
-        <span className="navbar__toggle-bar" />
-      </button>
+          <nav id="navbar-menu" className={`nav${isOpen ? ' navOpen' : ''}`} aria-label="Principal">
+            <ul className="navList">
+              {NAV_LINKS.map(({ to, label, end }) => (
+                <li key={to}>
+                  <NavLink to={to} end={end} className={navLinkClass} onClick={closeMenu}>
+                    {label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-      <nav id="navbar-menu" className={`navbar__menu${isOpen ? ' is-open' : ''}`}>
-        <NavLink to="/" end className={linkClass} onClick={closeMenu}>
-          Inicio
-        </NavLink>
-        <NavLink to="/productos" className={linkClass} onClick={closeMenu}>
-          Productos
-        </NavLink>
-        <NavLink to="/contacto" className={linkClass} onClick={closeMenu}>
-          Contacto
-        </NavLink>
+          <button
+            type="button"
+            className={`toggle${isOpen ? ' toggleOpen' : ''}`}
+            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isOpen}
+            aria-controls="navbar-menu"
+            onClick={() => setIsOpen((open) => !open)}
+          >
+            <span className="toggleBar" aria-hidden="true" />
+          </button>
 
-        {user ? (
-          <>
-            <NavLink to="/perfil" className={linkClass} onClick={closeMenu}>
-              Mi cuenta
+          <div className="actions">
+            {user ? (
+              <>
+                <NavLink to="/perfil" className="actionLink" onClick={closeMenu} aria-label="Mi cuenta">
+                  <UserIcon />
+                  <span className="actionText">Mi cuenta</span>
+                </NavLink>
+                <button type="button" className="actionLink" onClick={handleLogout} aria-label="Salir">
+                  <LogoutIcon />
+                  <span className="actionText">Salir</span>
+                </button>
+              </>
+            ) : (
+              <NavLink to="/login" className="actionLink" onClick={closeMenu} aria-label="Ingresar">
+                <UserIcon />
+                <span className="actionText">Ingresar</span>
+              </NavLink>
+            )}
+
+            <NavLink
+              to="/carrito"
+              className="actionLink"
+              onClick={closeMenu}
+              aria-label={`Carrito, ${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}`}
+            >
+              <CartIcon />
+              <span className={`cartCount${totalItems === 0 ? ' cartCountEmpty' : ''}`} aria-hidden="true">
+                {totalItems}
+              </span>
             </NavLink>
-            <button type="button" className="navbar__link navbar__logout" onClick={handleLogout}>
-              Salir
-            </button>
-          </>
-        ) : (
-          <NavLink to="/login" className={linkClass} onClick={closeMenu}>
-            Ingresar
-          </NavLink>
-        )}
+          </div>
+        </div>
+      </header>
 
-        <NavLink to="/carrito" className={linkClass} onClick={closeMenu}>
-          Carrito <span className="badge">{totalItems}</span>
-        </NavLink>
-      </nav>
-    </header>
+      {isOpen && <div className="backdrop" onClick={closeMenu} aria-hidden="true" />}
+    </>
   );
 }
 
