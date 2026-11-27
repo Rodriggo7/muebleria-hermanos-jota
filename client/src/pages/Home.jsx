@@ -5,8 +5,25 @@ import { getCategories, getProducts } from '../services/productService.js';
 
 import styles from './Home.module.css';
 
-// Destacados elegidos: Aparador Uspallata, Sofá Patagonia, Mesa de Noche Aconcagua, Silla de Trabajo Belgrano.
-const FEATURED_IDS = ['1', '6', '5', '10'];
+// Destacados: un producto con stock por categoría (hasta 4), elegidos de los datos de la API.
+// No se usan ids fijos: los del mock no existen en la base real.
+const FEATURED_COUNT = 4;
+
+function pickFeatured(products, categories) {
+  const available = products.filter((p) => p.stock > 0);
+  const picked = [];
+  for (const { value } of categories) {
+    const product = available.find((p) => p.category === value);
+    if (product) picked.push(product);
+    if (picked.length === FEATURED_COUNT) return picked;
+  }
+  // Si hay menos categorías con stock que lugares, se completa con otros productos.
+  for (const product of available) {
+    if (picked.length === FEATURED_COUNT) break;
+    if (!picked.includes(product)) picked.push(product);
+  }
+  return picked;
+}
 
 // Sin datos todavía: reemplazar cada [completar ...] por el contenido real.
 const BENEFITS = [1, 2, 3, 4].map((n) => ({
@@ -38,7 +55,7 @@ function Home() {
 
   const { status, products, categories, error } = data;
 
-  const featured = FEATURED_IDS.map((id) => products.find((p) => p._id === id)).filter(Boolean);
+  const featured = pickFeatured(products, categories);
 
   // Cada categoría usa la foto del primer producto que pertenece a ella.
   // Las categorías sin productos no se muestran.
