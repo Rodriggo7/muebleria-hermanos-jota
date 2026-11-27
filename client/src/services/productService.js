@@ -75,3 +75,47 @@ export async function getCategories() {
   return apiFetch('/products/categories');
 }
 
+
+// ---- Administración (requiere token de admin; ver backend/src/routes/productAdminRoutes.js) ----
+// El backend solo acepta: name, description, price, category, stock, images.
+// No hay borrado: "desactivar" oculta el producto de la tienda.
+
+const ADMIN_PATH = '/admin/products';
+
+// POST /admin/products → producto creado.
+export async function createProduct(data) {
+  if (USE_MOCK) {
+    await delay();
+    const product = { _id: `mock-${Date.now()}`, ...data };
+    MOCK_PRODUCTS.unshift(product);
+    return product;
+  }
+
+  return apiFetch(ADMIN_PATH, { method: 'POST', body: data });
+}
+
+// PUT /admin/products/:id → producto actualizado.
+export async function updateProduct(id, data) {
+  if (USE_MOCK) {
+    await delay();
+    const product = MOCK_PRODUCTS.find((p) => p._id === id);
+    if (!product) throw new Error('Producto no encontrado');
+    Object.assign(product, data);
+    return { ...product };
+  }
+
+  return apiFetch(`${ADMIN_PATH}/${encodeURIComponent(id)}`, { method: 'PUT', body: data });
+}
+
+// PATCH /admin/products/:id/deactivate → producto con isActive: false.
+export async function deactivateProduct(id) {
+  if (USE_MOCK) {
+    await delay();
+    const index = MOCK_PRODUCTS.findIndex((p) => p._id === id);
+    if (index === -1) throw new Error('Producto no encontrado');
+    const [removed] = MOCK_PRODUCTS.splice(index, 1);
+    return { ...removed, isActive: false };
+  }
+
+  return apiFetch(`${ADMIN_PATH}/${encodeURIComponent(id)}/deactivate`, { method: 'PATCH' });
+}
