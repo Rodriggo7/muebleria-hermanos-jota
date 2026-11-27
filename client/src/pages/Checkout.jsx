@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import CartNotices from '../components/cart/CartNotices.jsx';
 import Button from '../components/common/Button.jsx';
 import { useCart } from '../hooks/useCart.js';
 import { formatCurrency } from '../utils/formatCurrency.js';
@@ -11,7 +12,9 @@ import alertStyles from '../components/common/Alert.module.css';
 // Ruta protegida (ver AppRouter): sin sesión, ProtectedRoute manda a /login
 // con state.from = '/checkout' y Login vuelve acá después de ingresar.
 function Checkout() {
-  const { items, isEmpty, totalItems, totalPrice, checkout } = useCart();
+  const { items, isEmpty, totalItems, totalPrice, checkout, syncStatus } = useCart();
+  // Solo se confirma con precios y stock ya verificados contra la API.
+  const isVerified = syncStatus === 'synced';
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [order, setOrder] = useState(null);
@@ -66,6 +69,7 @@ function Checkout() {
     <section className={pageStyles.cart}>
       <header className={pageStyles.cartHeader}>
         <h1 className={pageStyles.title}>Finalizar compra</h1>
+        <CartNotices />
       </header>
 
       <ul className={cartStyles.list} role="list">
@@ -103,7 +107,7 @@ function Checkout() {
         </div>
 
         <div className={cartStyles.checkout}>
-          <Button onClick={handleConfirm} disabled={isProcessing} fullWidth>
+          <Button onClick={handleConfirm} disabled={isProcessing || !isVerified} fullWidth>
             {isProcessing ? 'Procesando...' : 'Confirmar pedido'}
           </Button>
           <Button variant="outline" to="/carrito" fullWidth>

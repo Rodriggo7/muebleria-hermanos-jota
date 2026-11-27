@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import CartItem from '../components/cart/CartItem.jsx';
+import CartNotices from '../components/cart/CartNotices.jsx';
 import CartSummary from '../components/cart/CartSummary.jsx';
 import { useCart } from '../hooks/useCart.js';
 
@@ -13,6 +14,7 @@ function Cart() {
     <section className={pageStyles.cart}>
       <header className={pageStyles.cartHeader}>
         <h1 className={pageStyles.title}>Carrito</h1>
+        <CartNotices />
       </header>
 
       {isEmpty ? (
