@@ -1,11 +1,7 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth.js';
 import { useCart } from '../../hooks/useCart.js';
-// Import de namespace: si useAuth.js todavía no exporta nada, no rompe el build.
-import * as authModule from '../../hooks/useAuth.js';
-
-const noAuth = () => ({ user: null, logout: () => {} });
-const useAuth = authModule.useAuth ?? authModule.default ?? noAuth;
 
 const navLinkClass = ({ isActive }) => (isActive ? 'navLink active' : 'navLink');
 
@@ -49,14 +45,16 @@ function CartIcon() {
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { totalItems = 0 } = useCart() ?? {};
-  const { user, logout } = useAuth() ?? {};
+  const { totalItems } = useCart();
+  const { user, isAdmin, logout } = useAuth();
+  const navigate = useNavigate();
 
   const closeMenu = () => setIsOpen(false);
 
   const handleLogout = () => {
     closeMenu();
-    logout?.();
+    logout();
+    navigate('/');
   };
 
   return (
@@ -76,6 +74,13 @@ function Navbar() {
                   </NavLink>
                 </li>
               ))}
+              {isAdmin && (
+                <li>
+                  <NavLink to="/admin/productos" className={navLinkClass} onClick={closeMenu}>
+                    Admin
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </nav>
 

@@ -2,19 +2,15 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CartItem from '../components/cart/CartItem.jsx';
 import CartSummary from '../components/cart/CartSummary.jsx';
+import { useAuth } from '../hooks/useAuth.js';
 import { useCart } from '../hooks/useCart.js';
-// Import de namespace: si useAuth.js todavía no exporta nada, no rompe el build.
-import * as authModule from '../hooks/useAuth.js';
 
 import pageStyles from './Cart.module.css';
 import cartStyles from '../components/cart/Cart.module.css';
 
-const noAuth = () => ({ user: null });
-const useAuth = authModule.useAuth ?? authModule.default ?? noAuth;
-
 function Cart() {
   const { items, isEmpty, checkout } = useCart();
-  const { user } = useAuth() ?? {};
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [isProcessing, setIsProcessing] = useState(false);
