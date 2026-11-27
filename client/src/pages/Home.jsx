@@ -16,8 +16,6 @@ const BENEFITS = [1, 2, 3, 4].map((n) => ({
   text: `[completar descripción del beneficio ${n}]`,
 }));
 
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
-
 function Home() {
   const [data, setData] = useState({ status: 'loading', products: [], categories: [], error: null });
 
@@ -44,10 +42,14 @@ function Home() {
   const featured = FEATURED_IDS.map((id) => products.find((p) => p._id === id)).filter(Boolean);
 
   // Cada categoría usa la foto del primer producto que pertenece a ella.
-  const categoryCards = categories.map((category) => ({
-    category,
-    image: products.find((p) => p.category === category)?.images?.[0],
-  }));
+  // Las categorías sin productos no se muestran.
+  const categoryCards = categories
+    .map(({ value, label }) => ({
+      value,
+      label,
+      image: products.find((p) => p.category === value)?.images?.[0],
+    }))
+    .filter((card) => card.image);
 
   return (
     <>
@@ -89,17 +91,15 @@ function Home() {
             </h2>
           </div>
           <div className={styles.categories}>
-            {categoryCards.map(({ category, image }) => (
+            {categoryCards.map(({ value, label, image }) => (
               <Link
-                key={category}
-                to={`/productos?category=${encodeURIComponent(category)}`}
+                key={value}
+                to={`/productos?category=${encodeURIComponent(value)}`}
                 className={styles.categoryCard}
               >
-                {image && (
-                  <img className={styles.categoryImage} src={image} alt="" width="400" height="500" loading="lazy" />
-                )}
+                <img className={styles.categoryImage} src={image} alt="" width="400" height="500" loading="lazy" />
                 <span className={styles.categoryOverlay} aria-hidden="true" />
-                <span className={styles.categoryName}>{capitalize(category)}</span>
+                <span className={styles.categoryName}>{label}</span>
               </Link>
             ))}
           </div>

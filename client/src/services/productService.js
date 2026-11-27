@@ -19,6 +19,16 @@ const MOCK_PRODUCTS = [
   { _id: '11', name: 'Biblioteca Recoleta', description: 'Sistema modular de estantes abierto que combina estructura de acero Sage Green y repisas en roble claro. Perfecta para colecciones y objetos de diseño, su diseño versátil se adapta a cualquier espacio contemporáneo con elegancia funcional.', price: 410000, category: 'living', stock: 4, images: ['/images/biblioteca-recoleta.png'], specs: [{ label: 'Medidas', value: '100 × 35 × 200 cm' }, { label: 'Materiales', value: 'Estructura de acero, estantes de roble' }, { label: 'Acabado', value: 'Laca mate ecológica' }, { label: 'Capacidad', value: '45 kg por estante' }, { label: 'Modulares', value: '5 estantes ajustables' }] },
 ];
 
+// Mismo formato que GET /products/categories (backend/src/constants/productCategories.js).
+const MOCK_CATEGORIES = [
+  { value: 'living', label: 'Living' },
+  { value: 'comedor', label: 'Comedor' },
+  { value: 'dormitorio', label: 'Dormitorio' },
+  { value: 'oficina', label: 'Oficina' },
+  { value: 'exterior', label: 'Exterior' },
+  { value: 'decoracion', label: 'Decoración' },
+];
+
 const delay = (ms = MOCK_DELAY_MS) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function getProducts({ category, search } = {}) {
@@ -55,10 +65,11 @@ export async function getProductById(id) {
   return apiFetch(`/products/${encodeURIComponent(id)}`);
 }
 
+// Devuelve [{ value, label }].
 export async function getCategories() {
   if (USE_MOCK) {
     await delay();
-    return [...new Set(MOCK_PRODUCTS.map((product) => product.category))];
+    return MOCK_CATEGORIES;
   }
 
   return apiFetch('/products/categories');

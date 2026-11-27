@@ -8,8 +8,6 @@ const styles = {};
 
 const SEARCH_DEBOUNCE_MS = 300;
 
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
-
 function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category') ?? '';
@@ -126,7 +124,7 @@ function Products() {
           onChange={(event) => setSearchInput(event.target.value)}
         />
         <div className={styles.filters} role="group" aria-label="Filtrar por categoría">
-          {[{ value: '', label: 'Todas' }, ...categories.map((cat) => ({ value: cat, label: capitalize(cat) }))].map(
+          {[{ value: '', label: 'Todas' }, ...categories].map(
             ({ value, label }) => {
               const isActive = value === category;
               return (
