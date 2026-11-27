@@ -7,6 +7,9 @@ import Contact from '../pages/Contact.jsx';
 import Cart from '../pages/Cart.jsx';
 import Login from '../pages/Login.jsx';
 import Register from '../pages/Register.jsx';
+import Profile from '../pages/Profile.jsx';
+import MyOrders from '../pages/MyOrders.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 function NotFound() {
   return <h1>Página no encontrada</h1>;
@@ -25,11 +28,11 @@ function AppRouter() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
 
-        {/* TODO (Rodri): rutas protegidas, envueltas en ProtectedRoute */}
-        {/* <Route element={<ProtectedRoute />}>
-              <Route path="/perfil" element={<Profile />} />
-              <Route path="/mis-pedidos" element={<MyOrders />} />
-            </Route> */}
+        {/* Solo con sesión iniciada */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/perfil" element={<Profile />} />
+          <Route path="/mis-pedidos" element={<MyOrders />} />
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Route>
