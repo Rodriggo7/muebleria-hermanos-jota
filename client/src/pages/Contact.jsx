@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import Button from '../components/common/Button.jsx';
+import Field from '../components/common/Field.jsx';
 import { sendContact } from '../services/contactService.js';
 
 import formStyles from '../components/forms/Form.module.css';
-import inputStyles from '../components/common/Input.module.css';
+import alertStyles from '../components/common/Alert.module.css';
 
 const EMPTY_FORM = { name: '', email: '', phone: '', subject: '', message: '' };
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -14,33 +16,6 @@ function validate(form) {
   if (!form.subject.trim()) errors.subject = 'El asunto es obligatorio.';
   if (form.message.trim().length < 10) errors.message = 'El mensaje debe tener al menos 10 caracteres.';
   return errors;
-}
-
-function Field({ id, label, required = false, error, hint, children }) {
-  const className = error ? `${inputStyles.field} ${inputStyles.isError}` : inputStyles.field;
-  return (
-    <div className={className}>
-      <label htmlFor={id} className={inputStyles.label}>
-        {label}
-        {required && (
-          <span className={inputStyles.required} aria-hidden="true">
-            *
-          </span>
-        )}
-      </label>
-      {children}
-      {hint && !error && (
-        <p id={`${id}-hint`} className={inputStyles.hint}>
-          {hint}
-        </p>
-      )}
-      {error && (
-        <p id={`${id}-error`} className={inputStyles.errorMessage}>
-          {error}
-        </p>
-      )}
-    </div>
-  );
 }
 
 function Contact() {
@@ -87,15 +62,12 @@ function Contact() {
     }
   };
 
-  // Props de accesibilidad comunes a cada control.
-  const controlProps = (name, { hint = false } = {}) => ({
-    id: `contact-${name}`,
+  // Props comunes a cada control; id, clases y accesibilidad los agrega Field.
+  const controlProps = (name) => ({
     name,
     value: form[name],
     onChange: handleChange,
     disabled: isSending,
-    'aria-invalid': errors[name] ? true : undefined,
-    'aria-describedby': errors[name] ? `contact-${name}-error` : hint ? `contact-${name}-hint` : undefined,
   });
 
   const formClassName = isSending ? `${formStyles.form} ${formStyles.submitting}` : formStyles.form;
@@ -107,41 +79,41 @@ function Contact() {
       <form className={formClassName} onSubmit={handleSubmit} noValidate>
         <div className={formStyles.row}>
           <Field id="contact-name" label="Nombre" required error={errors.name}>
-            <input type="text" autoComplete="name" className={inputStyles.control} {...controlProps('name')} />
+            <input type="text" autoComplete="name" {...controlProps('name')} />
           </Field>
           <Field id="contact-email" label="Email" required error={errors.email}>
-            <input type="email" autoComplete="email" className={inputStyles.control} {...controlProps('email')} />
+            <input type="email" autoComplete="email" {...controlProps('email')} />
           </Field>
         </div>
 
         <div className={formStyles.row}>
           <Field id="contact-phone" label="Teléfono" hint="Opcional" error={errors.phone}>
-            <input type="tel" autoComplete="tel" className={inputStyles.control} {...controlProps('phone', { hint: true })} />
+            <input type="tel" autoComplete="tel" {...controlProps('phone')} />
           </Field>
           <Field id="contact-subject" label="Asunto" required error={errors.subject}>
-            <input type="text" className={inputStyles.control} {...controlProps('subject')} />
+            <input type="text" {...controlProps('subject')} />
           </Field>
         </div>
 
         <Field id="contact-message" label="Mensaje" required error={errors.message}>
-          <textarea
-            rows="6"
-            className={`${inputStyles.control} ${inputStyles.textarea}`}
-            {...controlProps('message')}
-          />
+          <textarea rows="6" {...controlProps('message')} />
         </Field>
 
         {sendError && (
-          <p className={formStyles.formAlert} role="alert">
+          <p className={`${formStyles.formAlert} ${alertStyles.alert} ${alertStyles.error}`} role="alert">
             {sendError}
           </p>
         )}
-        {sent && <p role="status">¡Gracias! Recibimos tu mensaje y te vamos a responder a la brevedad.</p>}
+        {sent && (
+          <p className={`${alertStyles.alert} ${alertStyles.success}`} role="status">
+            ¡Gracias! Recibimos tu mensaje y te vamos a responder a la brevedad.
+          </p>
+        )}
 
         <div className={formStyles.actions}>
-          <button type="submit" disabled={isSending}>
+          <Button type="submit" disabled={isSending}>
             {isSending ? 'Enviando...' : 'Enviar'}
-          </button>
+          </Button>
         </div>
       </form>
     </section>
