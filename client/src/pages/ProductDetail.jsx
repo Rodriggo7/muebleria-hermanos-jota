@@ -5,8 +5,7 @@ import { useCart } from '../hooks/useCart.js';
 import { getProductById } from '../services/productService.js';
 import { formatCurrency } from '../utils/formatCurrency.js';
 
-// TODO: reemplazar por: import styles from './ProductDetail.module.css';
-const styles = {};
+import styles from './ProductDetail.module.css';
 
 function ProductDetail() {
   const { id } = useParams();

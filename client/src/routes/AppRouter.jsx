@@ -1,12 +1,21 @@
-import { Routes, Route } from 'react-router-dom';
+import { Navigate, Routes, Route } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout.jsx';
+import AdminLayout from '../layouts/AdminLayout.jsx';
 import Home from '../pages/Home.jsx';
 import Products from '../pages/Products.jsx';
 import ProductDetail from '../pages/ProductDetail.jsx';
 import Contact from '../pages/Contact.jsx';
 import Cart from '../pages/Cart.jsx';
-// TODO (Rodri): importar Login, Register, Profile, MyOrders, ProtectedRoute,
-// AdminRoute, AdminLayout y las páginas de admin.
+import Login from '../pages/Login.jsx';
+import Register from '../pages/Register.jsx';
+import Profile from '../pages/Profile.jsx';
+import MyOrders from '../pages/MyOrders.jsx';
+import Checkout from '../pages/Checkout.jsx';
+import AdminProducts from '../pages/admin/AdminProducts.jsx';
+import NewProduct from '../pages/admin/NewProduct.jsx';
+import EditProduct from '../pages/admin/EditProduct.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
+import AdminRoute from './AdminRoute.jsx';
 
 function NotFound() {
   return <h1>Página no encontrada</h1>;
@@ -22,27 +31,28 @@ function AppRouter() {
         <Route path="/contacto" element={<Contact />} />
         <Route path="/carrito" element={<Cart />} />
 
-        {/* TODO (Rodri): rutas públicas de autenticación */}
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/registro" element={<Register />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
 
-        {/* TODO (Rodri): rutas protegidas, envueltas en ProtectedRoute */}
-        {/* <Route element={<ProtectedRoute />}>
-              <Route path="/perfil" element={<Profile />} />
-              <Route path="/mis-pedidos" element={<MyOrders />} />
-            </Route> */}
+        {/* Solo con sesión iniciada */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/perfil" element={<Profile />} />
+          <Route path="/mis-pedidos" element={<MyOrders />} />
+        </Route>
+
+        {/* Solo administradores */}
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Navigate to="productos" replace />} />
+            <Route path="productos" element={<AdminProducts />} />
+            <Route path="productos/nuevo" element={<NewProduct />} />
+            <Route path="productos/:id/editar" element={<EditProduct />} />
+          </Route>
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Route>
-
-      {/* TODO (Rodri): rutas de admin, con AdminRoute y AdminLayout */}
-      {/* <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="productos" element={<AdminProducts />} />
-              <Route path="productos/nuevo" element={<NewProduct />} />
-              <Route path="productos/:id/editar" element={<EditProduct />} />
-            </Route>
-          </Route> */}
     </Routes>
   );
 }

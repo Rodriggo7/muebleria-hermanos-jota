@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart.js';
 import { formatCurrency } from '../../utils/formatCurrency.js';
 
-// TODO: reemplazar por: import styles from './ProductCard.module.css';
-const styles = {};
+import styles from './ProductCard.module.css';
 
 function ProductCard({ product }) {
   const { addItem } = useCart();

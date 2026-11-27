@@ -1,49 +1,20 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CartItem from '../components/cart/CartItem.jsx';
+import CartNotices from '../components/cart/CartNotices.jsx';
 import CartSummary from '../components/cart/CartSummary.jsx';
 import { useCart } from '../hooks/useCart.js';
-// Import de namespace: si useAuth.js todavía no exporta nada, no rompe el build.
-import * as authModule from '../hooks/useAuth.js';
 
-// TODO: reemplazar por: import pageStyles from './Cart.module.css';
-const pageStyles = {};
-// TODO: reemplazar por: import cartStyles from '../components/cart/Cart.module.css';
-const cartStyles = {};
-
-const noAuth = () => ({ user: null });
-const useAuth = authModule.useAuth ?? authModule.default ?? noAuth;
+import pageStyles from './Cart.module.css';
+import cartStyles from '../components/cart/Cart.module.css';
 
 function Cart() {
-  const { items, isEmpty, checkout } = useCart();
-  const { user } = useAuth() ?? {};
-  const navigate = useNavigate();
-
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleCheckout = async () => {
-    if (!user) {
-      navigate('/login', { state: { from: '/carrito' } });
-      return;
-    }
-
-    setIsProcessing(true);
-    setError(null);
-    try {
-      await checkout();
-      navigate('/mis-pedidos');
-    } catch (err) {
-      setError(err.message || 'No pudimos finalizar la compra');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  const { items, isEmpty } = useCart();
 
   return (
     <section className={pageStyles.cart}>
       <header className={pageStyles.cartHeader}>
         <h1 className={pageStyles.title}>Carrito</h1>
+        <CartNotices />
       </header>
 
       {isEmpty ? (
@@ -58,7 +29,7 @@ function Cart() {
               <CartItem key={item._id} item={item} />
             ))}
           </ul>
-          <CartSummary onCheckout={handleCheckout} isProcessing={isProcessing} error={error} />
+          <CartSummary />
         </>
       )}
     </section>

@@ -3,20 +3,83 @@ import { Link } from 'react-router-dom';
 import ProductList from '../components/products/ProductList.jsx';
 import { getCategories, getProducts } from '../services/productService.js';
 
-// TODO: reemplazar por: import styles from './Home.module.css';
-const styles = {};
+import styles from './Home.module.css';
 
-// Destacados elegidos: Aparador Uspallata, Sofá Patagonia, Mesa de Noche Aconcagua, Silla de Trabajo Belgrano.
-const FEATURED_IDS = ['1', '6', '5', '10'];
+// Destacados: un producto con stock por categoría (hasta 4), elegidos de los datos de la API.
+// No se usan ids fijos: los del mock no existen en la base real.
+const FEATURED_COUNT = 4;
 
-// Sin datos todavía: reemplazar cada [completar ...] por el contenido real.
-const BENEFITS = [1, 2, 3, 4].map((n) => ({
-  id: n,
-  title: `[completar beneficio ${n}]`,
-  text: `[completar descripción del beneficio ${n}]`,
-}));
+function pickFeatured(products, categories) {
+  const available = products.filter((p) => p.stock > 0);
+  const picked = [];
+  for (const { value } of categories) {
+    const product = available.find((p) => p.category === value);
+    if (product) picked.push(product);
+    if (picked.length === FEATURED_COUNT) return picked;
+  }
+  // Si hay menos categorías con stock que lugares, se completa con otros productos.
+  for (const product of available) {
+    if (picked.length === FEATURED_COUNT) break;
+    if (!picked.includes(product)) picked.push(product);
+  }
+  return picked;
+}
 
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+// Íconos de trazo simples (24×24), decorativos.
+const iconProps = {
+  width: 24,
+  height: 24,
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 1.75,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+  'aria-hidden': true,
+};
+
+const TreeIcon = () => (
+  <svg {...iconProps}>
+    <path d="M12 3l6 8h-3l4 5H5l4-5H6z" />
+    <path d="M12 16v5" />
+  </svg>
+);
+
+const ShieldIcon = () => (
+  <svg {...iconProps}>
+    <path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" />
+    <path d="M9 12l2 2 4-4" />
+  </svg>
+);
+
+const DropIcon = () => (
+  <svg {...iconProps}>
+    <path d="M12 3c3.5 4.2 6 7.6 6 10.5a6 6 0 0 1-12 0C6 10.6 8.5 7.2 12 3z" />
+    <path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5" />
+  </svg>
+);
+
+const ToolIcon = () => (
+  <svg {...iconProps}>
+    <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3.5 17.5a1.4 1.4 0 0 0 2 2l5.8-5.8a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2z" />
+  </svg>
+);
+
+// Contenido oficial del manual de marca.
+const BENEFITS = [
+  {
+    title: 'Madera certificada',
+    text: 'Maderas nativas certificadas FSC de bosques responsables argentinos: algarrobo, quebracho y caldén.',
+    Icon: TreeIcon,
+  },
+  { title: 'Garantía extendida', text: '10 años en estructura y 5 años en acabados.', Icon: ShieldIcon },
+  { title: 'Acabados naturales', text: 'Aceite de lino, cera de abejas y tintes vegetales de bajo COV.', Icon: DropIcon },
+  {
+    title: 'Servicio de restauración',
+    text: 'Recuperamos y renovamos tus piezas para que duren generaciones.',
+    Icon: ToolIcon,
+  },
+];
 
 function Home() {
   const [data, setData] = useState({ status: 'loading', products: [], categories: [], error: null });
@@ -41,13 +104,17 @@ function Home() {
 
   const { status, products, categories, error } = data;
 
-  const featured = FEATURED_IDS.map((id) => products.find((p) => p._id === id)).filter(Boolean);
+  const featured = pickFeatured(products, categories);
 
   // Cada categoría usa la foto del primer producto que pertenece a ella.
-  const categoryCards = categories.map((category) => ({
-    category,
-    image: products.find((p) => p.category === category)?.images?.[0],
-  }));
+  // Las categorías sin productos no se muestran.
+  const categoryCards = categories
+    .map(({ value, label }) => ({
+      value,
+      label,
+      image: products.find((p) => p.category === value)?.images?.[0],
+    }))
+    .filter((card) => card.image);
 
   return (
     <>
@@ -55,7 +122,7 @@ function Home() {
         <div className={styles.heroInner}>
           <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>Hermanos Jota</h1>
-            <p className={styles.heroText}>[completar subtítulo del hero]</p>
+            <p className={styles.heroText}>Cada pieza cuenta la historia de manos expertas y materiales nobles.</p>
             <div className={styles.heroActions}>
               <Link to="/productos">Ver productos</Link>
             </div>
@@ -89,17 +156,15 @@ function Home() {
             </h2>
           </div>
           <div className={styles.categories}>
-            {categoryCards.map(({ category, image }) => (
+            {categoryCards.map(({ value, label, image }) => (
               <Link
-                key={category}
-                to={`/productos?category=${encodeURIComponent(category)}`}
+                key={value}
+                to={`/productos?category=${encodeURIComponent(value)}`}
                 className={styles.categoryCard}
               >
-                {image && (
-                  <img className={styles.categoryImage} src={image} alt="" width="400" height="500" loading="lazy" />
-                )}
+                <img className={styles.categoryImage} src={image} alt="" width="400" height="500" loading="lazy" />
                 <span className={styles.categoryOverlay} aria-hidden="true" />
-                <span className={styles.categoryName}>{capitalize(category)}</span>
+                <span className={styles.categoryName}>{label}</span>
               </Link>
             ))}
           </div>
@@ -108,10 +173,10 @@ function Home() {
 
       <section aria-label="Beneficios">
         <ul className={styles.benefits} role="list">
-          {BENEFITS.map(({ id, title, text }) => (
-            <li key={id} className={styles.benefit}>
+          {BENEFITS.map(({ title, text, Icon }) => (
+            <li key={title} className={styles.benefit}>
               <span className={styles.benefitIcon} aria-hidden="true">
-                [ícono]
+                <Icon />
               </span>
               <div>
                 <h3 className={styles.benefitTitle}>{title}</h3>
@@ -124,14 +189,17 @@ function Home() {
 
       <section className={styles.banner}>
         <div>
-          <h2 className={styles.bannerTitle}>[completar título del banner]</h2>
-          <p className={styles.bannerText}>[completar texto del banner]</p>
+          <h2 className={styles.bannerTitle}>Programa Herencia Viva</h2>
+          <p className={styles.bannerText}>
+            Vivir con Hermanos Jota se convierte en parte de tu ritual diario. Cada pieza envejece con gracia: no solo
+            compraste muebles, invertiste en un legado.
+          </p>
         </div>
       </section>
 
       <section className={styles.cta}>
-        <h2>[completar título del llamado final]</h2>
-        <p className={styles.ctaText}>[completar texto del llamado final]</p>
+        <h2>Visitá nuestra Casa Taller</h2>
+        <p className={styles.ctaText}>Te esperamos en San Cristóbal para conocer cada pieza de cerca.</p>
         <Link to="/contacto">Contacto</Link>
       </section>
     </>

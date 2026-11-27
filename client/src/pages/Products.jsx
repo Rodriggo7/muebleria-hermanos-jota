@@ -3,12 +3,9 @@ import { useSearchParams } from 'react-router-dom';
 import ProductList from '../components/products/ProductList.jsx';
 import { getCategories, getProducts } from '../services/productService.js';
 
-// TODO: reemplazar por: import styles from './Products.module.css';
-const styles = {};
+import styles from './Products.module.css';
 
 const SEARCH_DEBOUNCE_MS = 300;
-
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 
 function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -126,7 +123,7 @@ function Products() {
           onChange={(event) => setSearchInput(event.target.value)}
         />
         <div className={styles.filters} role="group" aria-label="Filtrar por categoría">
-          {[{ value: '', label: 'Todas' }, ...categories.map((cat) => ({ value: cat, label: capitalize(cat) }))].map(
+          {[{ value: '', label: 'Todas' }, ...categories].map(
             ({ value, label }) => {
               const isActive = value === category;
               return (

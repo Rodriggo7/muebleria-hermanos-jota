@@ -19,6 +19,16 @@ const MOCK_PRODUCTS = [
   { _id: '11', name: 'Biblioteca Recoleta', description: 'Sistema modular de estantes abierto que combina estructura de acero Sage Green y repisas en roble claro. Perfecta para colecciones y objetos de diseño, su diseño versátil se adapta a cualquier espacio contemporáneo con elegancia funcional.', price: 410000, category: 'living', stock: 4, images: ['/images/biblioteca-recoleta.png'], specs: [{ label: 'Medidas', value: '100 × 35 × 200 cm' }, { label: 'Materiales', value: 'Estructura de acero, estantes de roble' }, { label: 'Acabado', value: 'Laca mate ecológica' }, { label: 'Capacidad', value: '45 kg por estante' }, { label: 'Modulares', value: '5 estantes ajustables' }] },
 ];
 
+// Mismo formato que GET /products/categories (backend/src/constants/productCategories.js).
+const MOCK_CATEGORIES = [
+  { value: 'living', label: 'Living' },
+  { value: 'comedor', label: 'Comedor' },
+  { value: 'dormitorio', label: 'Dormitorio' },
+  { value: 'oficina', label: 'Oficina' },
+  { value: 'exterior', label: 'Exterior' },
+  { value: 'decoracion', label: 'Decoración' },
+];
+
 const delay = (ms = MOCK_DELAY_MS) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function getProducts({ category, search } = {}) {
@@ -55,12 +65,57 @@ export async function getProductById(id) {
   return apiFetch(`/products/${encodeURIComponent(id)}`);
 }
 
+// Devuelve [{ value, label }].
 export async function getCategories() {
   if (USE_MOCK) {
     await delay();
-    return [...new Set(MOCK_PRODUCTS.map((product) => product.category))];
+    return MOCK_CATEGORIES;
   }
 
   return apiFetch('/products/categories');
 }
 
+
+// ---- Administración (requiere token de admin; ver backend/src/routes/productAdminRoutes.js) ----
+// El backend solo acepta: name, description, price, category, stock, images.
+// No hay borrado: "desactivar" oculta el producto de la tienda.
+
+const ADMIN_PATH = '/admin/products';
+
+// POST /admin/products → producto creado.
+export async function createProduct(data) {
+  if (USE_MOCK) {
+    await delay();
+    const product = { _id: `mock-${Date.now()}`, ...data };
+    MOCK_PRODUCTS.unshift(product);
+    return product;
+  }
+
+  return apiFetch(ADMIN_PATH, { method: 'POST', body: data });
+}
+
+// PUT /admin/products/:id → producto actualizado.
+export async function updateProduct(id, data) {
+  if (USE_MOCK) {
+    await delay();
+    const product = MOCK_PRODUCTS.find((p) => p._id === id);
+    if (!product) throw new Error('Producto no encontrado');
+    Object.assign(product, data);
+    return { ...product };
+  }
+
+  return apiFetch(`${ADMIN_PATH}/${encodeURIComponent(id)}`, { method: 'PUT', body: data });
+}
+
+// PATCH /admin/products/:id/deactivate → producto con isActive: false.
+export async function deactivateProduct(id) {
+  if (USE_MOCK) {
+    await delay();
+    const index = MOCK_PRODUCTS.findIndex((p) => p._id === id);
+    if (index === -1) throw new Error('Producto no encontrado');
+    const [removed] = MOCK_PRODUCTS.splice(index, 1);
+    return { ...removed, isActive: false };
+  }
+
+  return apiFetch(`${ADMIN_PATH}/${encodeURIComponent(id)}/deactivate`, { method: 'PATCH' });
+}
