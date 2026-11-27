@@ -1,26 +1,35 @@
-// PROVISIONAL (Maxi): Rodri reemplaza este archivo en la integración.
+// Cliente HTTP de la app. Todas las respuestas de la API tienen la forma { success, message, data }.
 
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// Clave provisional: confirmar con Rodri dónde guarda el token el AuthContext.
+// Misma clave que usa AuthContext (services/authService.js) para guardar el JWT.
 const TOKEN_KEY = 'token';
+
+const NETWORK_ERROR_MESSAGE = 'No pudimos conectar con el servidor. Revisá tu conexión e intentá de nuevo.';
 
 export async function apiFetch(path, { method = 'GET', body, headers = {} } = {}) {
   const token = localStorage.getItem(TOKEN_KEY);
 
-  const res = await fetch(`${API_URL}${path}`, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...headers,
-    },
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-  });
+  let res;
+  try {
+    res = await fetch(`${API_URL}${path}`, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...headers,
+      },
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+  } catch (cause) {
+    // Sin respuesta del servidor (red caída, backend apagado, CORS).
+    // Sigue siendo TypeError: AuthContext y CartContext lo usan para no borrar sesión ni carrito.
+    throw new TypeError(NETWORK_ERROR_MESSAGE, { cause });
+  }
 
-  // La API responde { success, message, data }. Si no es JSON, queda json = null.
+  // Si la respuesta no es JSON, queda json = null.
   const json = await res.json().catch(() => null);
 
   if (!res.ok || !json?.success) {
