@@ -9,12 +9,30 @@ import alertStyles from '../components/common/Alert.module.css';
 const EMPTY_FORM = { name: '', email: '', phone: '', subject: '', message: '' };
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Límites máximos: los mismos que backend/src/validators/contactValidator.js.
+const MAX = { name: 100, email: 150, phone: 30, subject: 150, message: 3000 };
+
 function validate(form) {
   const errors = {};
-  if (form.name.trim().length < 2) errors.name = 'El nombre debe tener al menos 2 caracteres.';
-  if (!EMAIL_PATTERN.test(form.email.trim())) errors.email = 'Ingresá un email válido.';
-  if (!form.subject.trim()) errors.subject = 'El asunto es obligatorio.';
-  if (form.message.trim().length < 10) errors.message = 'El mensaje debe tener al menos 10 caracteres.';
+  const name = form.name.trim();
+  const email = form.email.trim();
+  const subject = form.subject.trim();
+  const message = form.message.trim();
+
+  if (name.length < 2) errors.name = 'El nombre debe tener al menos 2 caracteres.';
+  else if (name.length > MAX.name) errors.name = `El nombre no puede superar los ${MAX.name} caracteres.`;
+
+  if (!EMAIL_PATTERN.test(email)) errors.email = 'Ingresá un email válido.';
+  else if (email.length > MAX.email) errors.email = `El email no puede superar los ${MAX.email} caracteres.`;
+
+  if (form.phone.trim().length > MAX.phone) errors.phone = `El teléfono no puede superar los ${MAX.phone} caracteres.`;
+
+  if (!subject) errors.subject = 'El asunto es obligatorio.';
+  else if (subject.length > MAX.subject) errors.subject = `El asunto no puede superar los ${MAX.subject} caracteres.`;
+
+  if (message.length < 10) errors.message = 'El mensaje debe tener al menos 10 caracteres.';
+  else if (message.length > MAX.message) errors.message = `El mensaje no puede superar los ${MAX.message} caracteres.`;
+
   return errors;
 }
 
@@ -65,6 +83,7 @@ function Contact() {
   // Props comunes a cada control; id, clases y accesibilidad los agrega Field.
   const controlProps = (name) => ({
     name,
+    maxLength: MAX[name],
     value: form[name],
     onChange: handleChange,
     disabled: isSending,
