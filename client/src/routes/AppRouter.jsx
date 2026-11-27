@@ -10,6 +10,7 @@ import Login from '../pages/Login.jsx';
 import Register from '../pages/Register.jsx';
 import Profile from '../pages/Profile.jsx';
 import MyOrders from '../pages/MyOrders.jsx';
+import Checkout from '../pages/Checkout.jsx';
 import AdminProducts from '../pages/admin/AdminProducts.jsx';
 import NewProduct from '../pages/admin/NewProduct.jsx';
 import EditProduct from '../pages/admin/EditProduct.jsx';
@@ -35,6 +36,7 @@ function AppRouter() {
 
         {/* Solo con sesión iniciada */}
         <Route element={<ProtectedRoute />}>
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/perfil" element={<Profile />} />
           <Route path="/mis-pedidos" element={<MyOrders />} />
         </Route>

@@ -1,10 +1,11 @@
+import Button from '../common/Button.jsx';
 import { useCart } from '../../hooks/useCart.js';
 import { formatCurrency } from '../../utils/formatCurrency.js';
 
 import styles from './Cart.module.css';
 
-// Totales y vaciado salen del contexto; finalizar la compra lo resuelve la página.
-function CartSummary({ onCheckout, isProcessing = false, error = null }) {
+// Totales y vaciado salen del contexto. "Finalizar compra" lleva a /checkout (ruta protegida).
+function CartSummary() {
   const { totalItems, totalPrice, clearCart } = useCart();
 
   return (
@@ -24,13 +25,12 @@ function CartSummary({ onCheckout, isProcessing = false, error = null }) {
       </div>
 
       <div className={styles.checkout}>
-        <button type="button" onClick={onCheckout} disabled={isProcessing}>
-          {isProcessing ? 'Procesando...' : 'Finalizar compra'}
-        </button>
-        <button type="button" onClick={clearCart} disabled={isProcessing}>
+        <Button to="/checkout" fullWidth>
+          Finalizar compra
+        </Button>
+        <Button variant="ghost" onClick={clearCart} fullWidth>
           Vaciar carrito
-        </button>
-        {error && <p role="alert">{error}</p>}
+        </Button>
       </div>
     </aside>
   );

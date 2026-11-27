@@ -1,38 +1,13 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CartItem from '../components/cart/CartItem.jsx';
 import CartSummary from '../components/cart/CartSummary.jsx';
-import { useAuth } from '../hooks/useAuth.js';
 import { useCart } from '../hooks/useCart.js';
 
 import pageStyles from './Cart.module.css';
 import cartStyles from '../components/cart/Cart.module.css';
 
 function Cart() {
-  const { items, isEmpty, checkout } = useCart();
-  const { user } = useAuth();
-  const navigate = useNavigate();
-
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleCheckout = async () => {
-    if (!user) {
-      navigate('/login', { state: { from: '/carrito' } });
-      return;
-    }
-
-    setIsProcessing(true);
-    setError(null);
-    try {
-      await checkout();
-      navigate('/mis-pedidos');
-    } catch (err) {
-      setError(err.message || 'No pudimos finalizar la compra');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  const { items, isEmpty } = useCart();
 
   return (
     <section className={pageStyles.cart}>
@@ -52,7 +27,7 @@ function Cart() {
               <CartItem key={item._id} item={item} />
             ))}
           </ul>
-          <CartSummary onCheckout={handleCheckout} isProcessing={isProcessing} error={error} />
+          <CartSummary />
         </>
       )}
     </section>
