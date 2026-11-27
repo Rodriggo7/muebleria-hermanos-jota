@@ -5,8 +5,8 @@ import Products from '../pages/Products.jsx';
 import ProductDetail from '../pages/ProductDetail.jsx';
 import Contact from '../pages/Contact.jsx';
 import Cart from '../pages/Cart.jsx';
-// TODO (Rodri): importar Login, Register, Profile, MyOrders, ProtectedRoute,
-// AdminRoute, AdminLayout y las páginas de admin.
+import Login from '../pages/Login.jsx';
+import Register from '../pages/Register.jsx';
 
 function NotFound() {
   return <h1>Página no encontrada</h1>;
@@ -22,9 +22,8 @@ function AppRouter() {
         <Route path="/contacto" element={<Contact />} />
         <Route path="/carrito" element={<Cart />} />
 
-        {/* TODO (Rodri): rutas públicas de autenticación */}
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/registro" element={<Register />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
 
         {/* TODO (Rodri): rutas protegidas, envueltas en ProtectedRoute */}
         {/* <Route element={<ProtectedRoute />}>
