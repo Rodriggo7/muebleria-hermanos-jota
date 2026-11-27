@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { sendContact } from '../services/contactService.js';
 
-// TODO: reemplazar por: import formStyles from '../components/forms/Form.module.css';
-const formStyles = {};
-// TODO: reemplazar por: import inputStyles from '../components/common/Input.module.css';
-const inputStyles = {};
+import formStyles from '../components/forms/Form.module.css';
+import inputStyles from '../components/common/Input.module.css';
 
 const EMPTY_FORM = { name: '', email: '', phone: '', subject: '', message: '' };
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

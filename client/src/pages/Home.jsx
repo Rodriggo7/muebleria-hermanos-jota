@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import ProductList from '../components/products/ProductList.jsx';
 import { getCategories, getProducts } from '../services/productService.js';
 
-// TODO: reemplazar por: import styles from './Home.module.css';
-const styles = {};
+import styles from './Home.module.css';
 
 // Destacados elegidos: Aparador Uspallata, Sofá Patagonia, Mesa de Noche Aconcagua, Silla de Trabajo Belgrano.
 const FEATURED_IDS = ['1', '6', '5', '10'];

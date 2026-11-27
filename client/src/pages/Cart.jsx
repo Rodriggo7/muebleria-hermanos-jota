@@ -6,10 +6,8 @@ import { useCart } from '../hooks/useCart.js';
 // Import de namespace: si useAuth.js todavía no exporta nada, no rompe el build.
 import * as authModule from '../hooks/useAuth.js';
 
-// TODO: reemplazar por: import pageStyles from './Cart.module.css';
-const pageStyles = {};
-// TODO: reemplazar por: import cartStyles from '../components/cart/Cart.module.css';
-const cartStyles = {};
+import pageStyles from './Cart.module.css';
+import cartStyles from '../components/cart/Cart.module.css';
 
 const noAuth = () => ({ user: null });
 const useAuth = authModule.useAuth ?? authModule.default ?? noAuth;

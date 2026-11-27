@@ -3,8 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import ProductList from '../components/products/ProductList.jsx';
 import { getCategories, getProducts } from '../services/productService.js';
 
-// TODO: reemplazar por: import styles from './Products.module.css';
-const styles = {};
+import styles from './Products.module.css';
 
 const SEARCH_DEBOUNCE_MS = 300;
 

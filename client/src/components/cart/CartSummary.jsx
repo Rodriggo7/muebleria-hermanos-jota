@@ -1,8 +1,7 @@
 import { useCart } from '../../hooks/useCart.js';
 import { formatCurrency } from '../../utils/formatCurrency.js';
 
-// TODO: reemplazar por: import styles from './Cart.module.css';
-const styles = {};
+import styles from './Cart.module.css';
 
 // Totales y vaciado salen del contexto; finalizar la compra lo resuelve la página.
 function CartSummary({ onCheckout, isProcessing = false, error = null }) {

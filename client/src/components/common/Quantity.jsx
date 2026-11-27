@@ -1,5 +1,4 @@
-// TODO: reemplazar por: import styles from './Quantity.module.css';
-const styles = {};
+import styles from './Quantity.module.css';
 
 // Selector de cantidad: solo dibuja y avisa cambios. Los límites los decide quien lo usa.
 function Quantity({ value, min = 1, max = Infinity, onChange, compact = false, disabled = false, limit, label = 'Cantidad' }) {
