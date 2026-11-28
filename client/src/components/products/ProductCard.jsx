@@ -1,6 +1,6 @@
 import styles from "./ProductCard.module.css";
-import Badge from "../common/Badge";
-import Button from "../common/Button";
+import Badge from "../common/Badge.jsx";
+import Button from "../common/Button.jsx";
 import cx from "../../utils/cx";
 
 /**

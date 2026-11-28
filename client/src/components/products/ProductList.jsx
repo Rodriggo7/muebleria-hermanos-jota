@@ -1,26 +1,39 @@
+
 import styles from "./ProductList.module.css";
 import ProductCard from "./ProductCard";
 
 /**
- * Grilla de productos (solo presentación).
+ * Grilla de productos.
+ *
  * Props:
- *  - products: [{ id, name, href, image, imageAlt, category, description, price, oldPrice, badge, unavailable }]
- *  - onAddToCart(product)   (opcional: muestra el botón en cada tarjeta)
- *  - addingId               (id del producto que se está agregando, para mostrar el estado de carga)
- * Los estados de carga, error y vacío los resuelve la página <Products />.
+ * - products: lista de productos.
+ * - onAddToCart(product): función opcional para agregar al carrito.
+ * - addingId: ID del producto que se está agregando.
+ *
+ * Los estados de carga, error y vacío los resuelve la página Products.
  */
-export default function ProductList({ products = [], onAddToCart, addingId }) {
+
+export default function ProductList({
+  products = [],
+  onAddToCart,
+  addingId,
+}) {
   return (
     <ul className={styles.grid}>
       {products.map((product) => (
         <li key={product.id}>
           <ProductCard
             {...product}
-            adding={addingId !== undefined && addingId === product.id}
-            onAddToCart={onAddToCart ? () => onAddToCart(product) : undefined}
+            adding={addingId === product.id}
+            onAddToCart={
+              typeof onAddToCart === "function"
+                ? () => onAddToCart(product)
+                : undefined
+            }
           />
         </li>
       ))}
     </ul>
   );
 }
+
