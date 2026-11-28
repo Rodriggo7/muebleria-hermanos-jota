@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart.js';
-// Import de namespace: si useAuth.js todavía no exporta nada, no rompe el build.
-import * as authModule from '../../hooks/useAuth.js';
+import { useAuth } from '../../hooks/useAuth.js';
 
-const noAuth = () => ({ user: null, logout: () => {} });
-const useAuth = authModule.useAuth ?? authModule.default ?? noAuth;
 
 const navLinkClass = ({ isActive }) => (isActive ? 'navLink active' : 'navLink');
 
@@ -82,7 +79,7 @@ function Navbar() {
           <button
             type="button"
             className={`toggle${isOpen ? ' toggleOpen' : ''}`}
-            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-label={isOpen ? 'Cerrar menÃº' : 'Abrir menÃº'}
             aria-expanded={isOpen}
             aria-controls="navbar-menu"
             onClick={() => setIsOpen((open) => !open)}

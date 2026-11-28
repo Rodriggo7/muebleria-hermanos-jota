@@ -3,16 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import CartItem from '../components/cart/CartItem.jsx';
 import CartSummary from '../components/cart/CartSummary.jsx';
 import { useCart } from '../hooks/useCart.js';
-// Import de namespace: si useAuth.js todavía no exporta nada, no rompe el build.
-import * as authModule from '../hooks/useAuth.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 // TODO: reemplazar por: import pageStyles from './Cart.module.css';
 const pageStyles = {};
 // TODO: reemplazar por: import cartStyles from '../components/cart/Cart.module.css';
 const cartStyles = {};
 
-const noAuth = () => ({ user: null });
-const useAuth = authModule.useAuth ?? authModule.default ?? noAuth;
 
 function Cart() {
   const { items, isEmpty, checkout } = useCart();
@@ -48,8 +45,8 @@ function Cart() {
 
       {isEmpty ? (
         <div className={pageStyles.empty}>
-          <p>Tu carrito está vacío</p>
-          <Link to="/productos">Ver el catálogo</Link>
+          <p>Tu carrito estÃ¡ vacÃ­o</p>
+          <Link to="/productos">Ver el catÃ¡logo</Link>
         </div>
       ) : (
         <>
