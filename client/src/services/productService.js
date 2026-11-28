@@ -63,4 +63,23 @@ export async function getCategories() {
 
   return apiFetch('/products/categories');
 }
+// Operaciones administrativas: requieren token y rol administrador.
+export async function createProduct(productData) {
+  return apiFetch('/admin/products', {
+    method: 'POST',
+    body: productData,
+  });
+}
 
+export async function updateProduct(id, productData) {
+  return apiFetch(`/admin/products/${encodeURIComponent(id)}`, {
+    method: 'PUT',
+    body: productData,
+  });
+}
+
+export async function deactivateProduct(id) {
+  return apiFetch(`/admin/products/${encodeURIComponent(id)}/deactivate`, {
+    method: 'PATCH',
+  });
+}

@@ -1,15 +1,12 @@
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CartItem from '../components/cart/CartItem.jsx';
 import CartSummary from '../components/cart/CartSummary.jsx';
 import { useCart } from '../hooks/useCart.js';
 import { useAuth } from '../hooks/useAuth.js';
-
-// TODO: reemplazar por: import pageStyles from './Cart.module.css';
-const pageStyles = {};
-// TODO: reemplazar por: import cartStyles from '../components/cart/Cart.module.css';
-const cartStyles = {};
-
+import pageStyles from './Cart.module.css';
+import cartStyles from '../components/cart/Cart.module.css';
 
 function Cart() {
   const { items, isEmpty, checkout } = useCart();
@@ -27,6 +24,7 @@ function Cart() {
 
     setIsProcessing(true);
     setError(null);
+
     try {
       await checkout();
       navigate('/mis-pedidos');
@@ -45,8 +43,8 @@ function Cart() {
 
       {isEmpty ? (
         <div className={pageStyles.empty}>
-          <p>Tu carrito estÃ¡ vacÃ­o</p>
-          <Link to="/productos">Ver el catÃ¡logo</Link>
+          <p>Tu carrito está vacío</p>
+          <Link to="/productos">Ver el catálogo</Link>
         </div>
       ) : (
         <>
@@ -55,7 +53,11 @@ function Cart() {
               <CartItem key={item._id} item={item} />
             ))}
           </ul>
-          <CartSummary onCheckout={handleCheckout} isProcessing={isProcessing} error={error} />
+          <CartSummary
+            onCheckout={handleCheckout}
+            isProcessing={isProcessing}
+            error={error}
+          />
         </>
       )}
     </section>

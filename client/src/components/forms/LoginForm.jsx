@@ -1,3 +1,4 @@
+
 import styles from "./Form.module.css";
 import Input from "../common/Input";
 import Button from "../common/Button";
@@ -24,7 +25,9 @@ export default function LoginForm({
     <form className={styles.form} onSubmit={onSubmit} noValidate>
       <div className={styles.header}>
         <h1 className={styles.title}>Ingresar</h1>
-        <p className={styles.subtitle}>Entrá a tu cuenta para ver tus pedidos y comprar más rápido.</p>
+        <p className={styles.subtitle}>
+          Entrá a tu cuenta para ver tus pedidos y comprar más rápido.
+        </p>
       </div>
 
       {formError ? (

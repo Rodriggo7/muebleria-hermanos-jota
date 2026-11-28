@@ -1,3 +1,4 @@
+
 import styles from "../forms/Form.module.css";
 import Input from "../common/Input";
 import Button from "../common/Button";
@@ -63,7 +64,7 @@ export default function ProductForm({
           disabled={loading}
         >
           <option value="">Elegí una categoría</option>
-           {categories.map((category) => (
+          {categories.map((category) => (
             <option key={category.value} value={category.value}>
               {category.label}
             </option>

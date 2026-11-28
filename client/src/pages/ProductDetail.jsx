@@ -1,12 +1,11 @@
+
 import { Fragment, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Quantity from '../components/common/Quantity.jsx';
 import { useCart } from '../hooks/useCart.js';
 import { getProductById } from '../services/productService.js';
 import { formatCurrency } from '../utils/formatCurrency.js';
-
-// TODO: reemplazar por: import styles from './ProductDetail.module.css';
-const styles = {};
+import styles from './ProductDetail.module.css';
 
 function ProductDetail() {
   const { id } = useParams();

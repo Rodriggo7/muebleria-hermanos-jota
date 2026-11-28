@@ -1,3 +1,4 @@
+
 import { useId, useState } from "react";
 import styles from "./Input.module.css";
 import Icon from "./Icon";
@@ -39,17 +40,31 @@ export default function Input({
     "aria-describedby": describedBy,
   };
 
-  const state = cx(error && styles.isError, !error && success && styles.isSuccess, loading && styles.isLoading, disabled && styles.isDisabled);
+  const state = cx(
+    error && styles.isError,
+    !error && success && styles.isSuccess,
+    loading && styles.isLoading,
+    disabled && styles.isDisabled
+  );
 
   // Checkbox y radio: fila con control + texto
   if (type === "checkbox" || type === "radio") {
     return (
       <div className={cx(styles.field, state, className)}>
         <label className={styles.check} htmlFor={fieldId}>
-          <input type={type} className={cx(styles.checkInput, type === "radio" && styles.radio)} {...common} {...rest} />
+          <input
+            type={type}
+            className={cx(styles.checkInput, type === "radio" && styles.radio)}
+            {...common}
+            {...rest}
+          />
           <span className={styles.checkLabel}>{label}</span>
         </label>
-        {error ? <p id={messageId} className={styles.errorMessage}>{error}</p> : null}
+        {error ? (
+          <p id={messageId} className={styles.errorMessage}>
+            {error}
+          </p>
+        ) : null}
       </div>
     );
   }
@@ -72,7 +87,14 @@ export default function Input({
       </select>
     );
   } else {
-    control = <input type={isPassword && showPassword ? "text" : type} className={controlClass} {...common} {...rest} />;
+    control = (
+      <input
+        type={isPassword && showPassword ? "text" : type}
+        className={controlClass}
+        {...common}
+        {...rest}
+      />
+    );
   }
 
   return (
@@ -80,7 +102,9 @@ export default function Input({
       {label ? (
         <label className={styles.label} htmlFor={fieldId}>
           {label}
-          {required ? <span className={styles.required} aria-hidden="true">*</span> : null}
+          {required ? (
+            <span className={styles.required} aria-hidden="true">*</span>
+          ) : null}
         </label>
       ) : null}
       <div className={styles.inputWrap}>
@@ -97,11 +121,19 @@ export default function Input({
           </button>
         ) : null}
       </div>
-      {hint ? <p id={hintId} className={styles.hint}>{hint}</p> : null}
+      {hint ? (
+        <p id={hintId} className={styles.hint}>
+          {hint}
+        </p>
+      ) : null}
       {error ? (
-        <p id={messageId} className={styles.errorMessage}>{error}</p>
+        <p id={messageId} className={styles.errorMessage}>
+          {error}
+        </p>
       ) : success ? (
-        <p id={messageId} className={styles.successMessage}>{success}</p>
+        <p id={messageId} className={styles.successMessage}>
+          {success}
+        </p>
       ) : null}
     </div>
   );

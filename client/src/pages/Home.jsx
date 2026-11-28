@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductList from '../components/products/ProductList.jsx';
@@ -5,17 +6,13 @@ import { getCategories, getProducts } from '../services/productService.js';
 
 import styles from './Home.module.css';
 
-// Destacados elegidos: Aparador Uspallata, SofÃ¡ Patagonia, Mesa de Noche Aconcagua, Silla de Trabajo Belgrano.
-const FEATURED_IDS = ['1', '6', '5', '10'];
+const FEATURED_LIMIT = 4;
 
-// Sin datos todavÃ­a: reemplazar cada [completar ...] por el contenido real.
 const BENEFITS = [1, 2, 3, 4].map((n) => ({
   id: n,
   title: `[completar beneficio ${n}]`,
-  text: `[completar descripciÃ³n del beneficio ${n}]`,
+  text: `[completar descripción del beneficio ${n}]`,
 }));
-
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 
 function Home() {
   const [data, setData] = useState({ status: 'loading', products: [], categories: [], error: null });
@@ -25,11 +22,32 @@ function Home() {
 
     Promise.all([getProducts(), getCategories().catch(() => [])])
       .then(([products, categories]) => {
-        if (!ignore) setData({ status: 'ready', products, categories, error: null });
+        if (!ignore) {
+          const normalizedCategories = categories.map((category) =>
+            typeof category === 'string'
+              ? {
+                  value: category,
+                  label: category.charAt(0).toUpperCase() + category.slice(1),
+                }
+              : category
+          );
+
+          setData({
+            status: 'ready',
+            products,
+            categories: normalizedCategories,
+            error: null,
+          });
+        }
       })
       .catch((err) => {
         if (!ignore) {
-          setData({ status: 'error', products: [], categories: [], error: err.message || 'No pudimos cargar los productos' });
+          setData({
+            status: 'error',
+            products: [],
+            categories: [],
+            error: err.message || 'No pudimos cargar los productos',
+          });
         }
       });
 
@@ -40,12 +58,12 @@ function Home() {
 
   const { status, products, categories, error } = data;
 
-  const featured = FEATURED_IDS.map((id) => products.find((p) => p._id === id)).filter(Boolean);
+  const featured = products.slice(0, FEATURED_LIMIT);
 
-  // Cada categorÃ­a usa la foto del primer producto que pertenece a ella.
-  const categoryCards = categories.map((category) => ({
-    category,
-    image: products.find((p) => p.category === category)?.images?.[0],
+  const categoryCards = categories.map(({ value, label }) => ({
+    value,
+    label,
+    image: products.find((product) => product.category === value)?.images?.[0],
   }));
 
   return (
@@ -54,13 +72,19 @@ function Home() {
         <div className={styles.heroInner}>
           <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>Hermanos Jota</h1>
-            <p className={styles.heroText}>[completar subtÃ­tulo del hero]</p>
+            <p className={styles.heroText}>[completar subtítulo del hero]</p>
             <div className={styles.heroActions}>
               <Link to="/productos">Ver productos</Link>
             </div>
           </div>
           <div className={styles.heroMedia}>
-            <img className={styles.heroImage} src="/images/sofa-patagonia.png" alt="SofÃ¡ Patagonia" width="800" height="600" />
+            <img
+              className={styles.heroImage}
+              src="/images/sofa-patagonia.png"
+              alt="Sofá Patagonia"
+              width="800"
+              height="600"
+            />
           </div>
         </div>
       </section>
@@ -75,7 +99,7 @@ function Home() {
           </Link>
         </div>
 
-        {status === 'loading' && <div role="status">Cargando productosâ€¦</div>}
+        {status === 'loading' && <div role="status">Cargando productos…</div>}
         {status === 'error' && <div role="alert">{error}</div>}
         {status === 'ready' && <ProductList products={featured} className={styles.featuredGrid} />}
       </section>
@@ -84,21 +108,21 @@ function Home() {
         <section aria-labelledby="home-categories">
           <div className={styles.sectionHeader}>
             <h2 id="home-categories" className={styles.sectionTitle}>
-              CategorÃ­as
+              Categorías
             </h2>
           </div>
           <div className={styles.categories}>
-            {categoryCards.map(({ category, image }) => (
+            {categoryCards.map(({ value, label, image }) => (
               <Link
-                key={category}
-                to={`/productos?category=${encodeURIComponent(category)}`}
+                key={value}
+                to={`/productos?category=${encodeURIComponent(value)}`}
                 className={styles.categoryCard}
               >
                 {image && (
                   <img className={styles.categoryImage} src={image} alt="" width="400" height="500" loading="lazy" />
                 )}
                 <span className={styles.categoryOverlay} aria-hidden="true" />
-                <span className={styles.categoryName}>{capitalize(category)}</span>
+                <span className={styles.categoryName}>{label}</span>
               </Link>
             ))}
           </div>
@@ -110,7 +134,7 @@ function Home() {
           {BENEFITS.map(({ id, title, text }) => (
             <li key={id} className={styles.benefit}>
               <span className={styles.benefitIcon} aria-hidden="true">
-                [Ã­cono]
+                [ícono]
               </span>
               <div>
                 <h3 className={styles.benefitTitle}>{title}</h3>
@@ -123,13 +147,13 @@ function Home() {
 
       <section className={styles.banner}>
         <div>
-          <h2 className={styles.bannerTitle}>[completar tÃ­tulo del banner]</h2>
+          <h2 className={styles.bannerTitle}>[completar título del banner]</h2>
           <p className={styles.bannerText}>[completar texto del banner]</p>
         </div>
       </section>
 
       <section className={styles.cta}>
-        <h2>[completar tÃ­tulo del llamado final]</h2>
+        <h2>[completar título del llamado final]</h2>
         <p className={styles.ctaText}>[completar texto del llamado final]</p>
         <Link to="/contacto">Contacto</Link>
       </section>

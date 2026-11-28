@@ -1,10 +1,7 @@
 import { useCart } from '../../hooks/useCart.js';
 import { formatCurrency } from '../../utils/formatCurrency.js';
+import styles from './Cart.module.css';
 
-// TODO: reemplazar por: import styles from './Cart.module.css';
-const styles = {};
-
-// Totales y vaciado salen del contexto; finalizar la compra lo resuelve la página.
 function CartSummary({ onCheckout, isProcessing = false, error = null }) {
   const { totalItems, totalPrice, clearCart } = useCart();
 
@@ -21,16 +18,20 @@ function CartSummary({ onCheckout, isProcessing = false, error = null }) {
 
       <div className={`${styles.summaryRow} ${styles.summaryTotal}`}>
         <span>Total</span>
-        <span className={styles.summaryValue}>{formatCurrency(totalPrice)}</span>
+        <span className={styles.summaryValue}>
+          {formatCurrency(totalPrice)}
+        </span>
       </div>
 
       <div className={styles.checkout}>
         <button type="button" onClick={onCheckout} disabled={isProcessing}>
           {isProcessing ? 'Procesando...' : 'Finalizar compra'}
         </button>
+
         <button type="button" onClick={clearCart} disabled={isProcessing}>
           Vaciar carrito
         </button>
+
         {error && <p role="alert">{error}</p>}
       </div>
     </aside>

@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom';
 import Quantity from '../common/Quantity.jsx';
 import { useCart } from '../../hooks/useCart.js';
 import { formatCurrency } from '../../utils/formatCurrency.js';
-
-// TODO: reemplazar por: import styles from './Cart.module.css';
-const styles = {};
+import styles from './Cart.module.css';
 
 function CartItem({ item }) {
   const { updateQuantity, removeItem } = useCart();
@@ -14,7 +12,14 @@ function CartItem({ item }) {
   return (
     <li className={styles.item}>
       <div className={styles.itemMedia}>
-        <img className={styles.itemImage} src={images?.[0]} alt={name} width="80" height="80" loading="lazy" />
+        <img
+          className={styles.itemImage}
+          src={images?.[0]}
+          alt={name}
+          width="80"
+          height="80"
+          loading="lazy"
+        />
       </div>
 
       <div className={styles.itemInfo}>
@@ -25,7 +30,6 @@ function CartItem({ item }) {
       </div>
 
       <div className={styles.itemControls}>
-        {/* El contexto limita la cantidad entre 1 y el stock. */}
         <Quantity
           value={quantity}
           min={1}
@@ -34,9 +38,17 @@ function CartItem({ item }) {
           compact
           label={`Cantidad de ${name}`}
         />
-        {/* Único cálculo del componente: subtotal visual de la fila. */}
-        <span className={styles.itemTotal}>{formatCurrency(price * quantity)}</span>
-        <button type="button" className={styles.remove} onClick={() => removeItem(_id)} aria-label={`Quitar ${name}`}>
+
+        <span className={styles.itemTotal}>
+          {formatCurrency(price * quantity)}
+        </span>
+
+        <button
+          type="button"
+          className={styles.remove}
+          onClick={() => removeItem(_id)}
+          aria-label={`Quitar ${name}`}
+        >
           Quitar
         </button>
       </div>

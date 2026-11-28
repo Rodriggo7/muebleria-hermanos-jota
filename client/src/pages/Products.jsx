@@ -2,13 +2,9 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductList from '../components/products/ProductList.jsx';
 import { getCategories, getProducts } from '../services/productService.js';
-
-// TODO: reemplazar por: import styles from './Products.module.css';
-const styles = {};
+import styles from './Products.module.css';
 
 const SEARCH_DEBOUNCE_MS = 300;
-
-const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 
 function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,18 +13,13 @@ function Products() {
 
   const [categories, setCategories] = useState([]);
 
-  // Resultado de la última búsqueda, marcado con los filtros que lo generaron.
-  // Mientras no coincida con los filtros actuales, se está cargando.
   const queryKey = `${category}|${search}`;
   const [result, setResult] = useState({ key: null, products: [], error: null });
   const isLoading = result.key !== queryKey;
   const { products, error } = result;
 
-  // Texto del input. Se pasa a la URL con un pequeño retardo para no
-  // pedir productos en cada tecla.
   const [searchInput, setSearchInput] = useState(search);
 
-  // Si la URL cambia desde afuera (atrás/adelante), el input la acompaña.
   const [lastUrlSearch, setLastUrlSearch] = useState(search);
   if (search !== lastUrlSearch) {
     setLastUrlSearch(search);
@@ -44,22 +35,29 @@ function Products() {
     }, options);
   };
 
-  // Categorías: una sola vez.
   useEffect(() => {
     let ignore = false;
+
     getCategories()
       .then((data) => {
-        if (!ignore) setCategories(data);
+        if (!ignore) {
+          const normalized = data.map((category) =>
+            typeof category === 'string'
+              ? { value: category, label: category.charAt(0).toUpperCase() + category.slice(1) }
+              : category
+          );
+          setCategories(normalized);
+        }
       })
       .catch(() => {
-        // Sin categorías solo aparece el chip "Todas"; la lista sigue funcionando.
+        // Sin categorías solo aparece el chip "Todas".
       });
+
     return () => {
       ignore = true;
     };
   }, []);
 
-  // Productos: cada vez que cambian los filtros de la URL.
   useEffect(() => {
     let ignore = false;
     const key = `${category}|${search}`;
@@ -79,7 +77,6 @@ function Products() {
     };
   }, [category, search]);
 
-  // Del input a la URL, con retardo. replace: no llena el historial con cada letra.
   useEffect(() => {
     const term = searchInput.trim();
     if (term === search) return undefined;
@@ -126,22 +123,23 @@ function Products() {
           onChange={(event) => setSearchInput(event.target.value)}
         />
         <div className={styles.filters} role="group" aria-label="Filtrar por categoría">
-          {[{ value: '', label: 'Todas' }, ...categories.map((cat) => ({ value: cat, label: capitalize(cat) }))].map(
-            ({ value, label }) => {
-              const isActive = value === category;
-              return (
-                <button
-                  key={value || 'todas'}
-                  type="button"
-                  className={isActive ? `${styles.chip} ${styles.chipActive}` : styles.chip}
-                  aria-pressed={isActive}
-                  onClick={() => updateParam('category', value)}
-                >
-                  {label}
-                </button>
-              );
-            }
-          )}
+          {[
+            { value: '', label: 'Todas' },
+            ...categories.map(({ value, label }) => ({ value, label })),
+          ].map(({ value, label }) => {
+            const isActive = value === category;
+            return (
+              <button
+                key={value || 'todas'}
+                type="button"
+                className={isActive ? `${styles.chip} ${styles.chipActive}` : styles.chip}
+                aria-pressed={isActive}
+                onClick={() => updateParam('category', value)}
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
       </div>
 

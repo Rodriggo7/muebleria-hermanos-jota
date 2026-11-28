@@ -1,9 +1,10 @@
+
 import styles from "./Form.module.css";
 import Input from "../common/Input";
 import Button from "../common/Button";
 
 /**
- * Formulario de registro 
+ * Formulario de registro.
  * Campos: name, email, password, confirmPassword (ajustar si el modelo de usuario pide otros).
  * Props: values, errors, formError, loading, loginHref, onChange, onSubmit
  */
@@ -20,7 +21,9 @@ export default function RegisterForm({
     <form className={styles.form} onSubmit={onSubmit} noValidate>
       <div className={styles.header}>
         <h1 className={styles.title}>Crear cuenta</h1>
-        <p className={styles.subtitle}>Registrate para seguir tus pedidos y guardar tus datos.</p>
+        <p className={styles.subtitle}>
+          Registrate para seguir tus pedidos y guardar tus datos.
+        </p>
       </div>
 
       {formError ? (
