@@ -6,9 +6,7 @@
   --color-gold: #d4a437;           /* Vara de Oro — detalles premium */
   --color-rose: #c47a6d;           /* Rosa Polvoriento — acentos suaves */
 
-  /* ---- Color · derivados (accesibilidad AA) ---------------------------
-     Salvia, oro y rosa NO alcanzan 4.5:1 como texto sobre claro.
-     Estas variantes oscuras se usan para texto/fondos con texto.      */
+  /* ---- Color · derivados (accesibilidad AA) -------------------------- */
   --color-primary-dark: #7f3f22;   /* hover/active del primario */
   --color-secondary-dark: #5c7a45; /* texto y botones salvia (4.9:1 sobre blanco) */
   --color-secondary-darker: #4a6338;
@@ -105,12 +103,110 @@
   --z-overlay: 300;
   --z-modal: 400;
   --z-toast: 500;
-}
 
+  /* ======================================================================
+     CAPA DE COMPATIBILIDAD
+      ====================================================================== */
+
+  /* Tipografía */
+  --font-body: var(--font-sans);
+  --font-heading: var(--font-serif);
+  --text-xs: var(--fs-xs);
+  --text-sm: var(--fs-sm);
+  --text-base: var(--fs-md);
+  --text-md: var(--fs-md);
+  --text-lg: var(--fs-lg);
+  --text-xl: var(--fs-xl);
+  --heading-1: var(--fs-4xl);
+  --heading-2: var(--fs-3xl);
+  --heading-3: var(--fs-2xl);
+  --weight-regular: var(--fw-regular);
+  --weight-medium: var(--fw-medium);
+  --weight-semibold: 600;
+  --weight-bold: var(--fw-bold);
+  --leading-tight: var(--lh-title);
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: var(--lh-body);
+  --tracking-tight: normal;
+  --tracking-wide: 0.04em;
+
+  /* Primario (Siena) */
+  --color-primary-50: var(--color-primary-tint);
+  --color-primary-100: color-mix(in srgb, var(--color-primary) 20%, var(--color-surface));
+  --color-primary-500: var(--color-primary);
+  --color-primary-600: color-mix(in srgb,var(--color-primary) 85%,  black);
+  --color-primary-700: color-mix(in srgb, var(--color-primary-dark) 85%, black);
+  --color-primary-800: color-mix(in srgb, var(--color-primary-dark) 65%, black);
+
+  /* Secundario (Salvia) y acento (Vara de Oro) */
+  --color-secondary-700: var(--color-secondary-dark);
+  --color-secondary-800: var(--color-secondary-darker);
+  --color-accent-300: color-mix(in srgb, var(--color-gold) 70%, white);
+  --color-accent-500: var(--color-gold);
+  --color-accent-600: color-mix(in srgb, var(--color-gold) 92%, black);
+  --color-accent-700: color-mix(in srgb, var(--color-gold) 84%, black);
+
+  /* Estados */
+  --color-error-50: var(--color-error-tint);
+  --color-error-500: var(--color-error);
+  --color-error-700: var(--color-error-dark);
+  --color-success-50: var(--color-success-tint);
+  --color-success-500: var(--color-secondary-dark);
+  --color-success-700: var(--color-secondary-darker);
+  --color-warning-50: var(--color-warning-tint);
+  --color-warning-500: var(--color-gold);
+  --color-warning-700: var(--color-warning-text);
+  --color-info-50: var(--color-info-tint);
+  --color-info-500: var(--color-primary);
+  --color-info-700: var(--color-info-text);
+
+  /* Neutros cálidos (derivados del marrón del texto) */
+  --color-neutral-100: color-mix(in srgb, var(--color-text) 8%, var(--color-surface));
+  --color-neutral-300: color-mix(in srgb, var(--color-text) 25%, var(--color-surface));
+  --color-neutral-500: color-mix(in srgb, var(--color-text) 55%, var(--color-surface));
+  --color-neutral-700: var(--color-text-muted);
+  --color-neutral-800: var(--color-text);
+  --color-neutral-900: var(--color-text);
+
+  /* Superficies, bordes, texto, deshabilitado, overlay */
+  --color-heading: var(--color-primary);
+  --color-link: var(--color-primary-dark);
+  --color-link-hover: var(--color-text);
+  --color-focus: var(--color-primary);
+  --color-text-inverse: var(--color-on-primary);
+  --color-text-subtle: #7d665b;
+  --color-surface-alt: var(--color-bg-soft);
+  --color-surface-sunken: var(--color-primary-tint);
+  --color-border-strong: color-mix(in srgb, var(--color-text-muted) 70%, var(--color-surface)); /* ≥3:1 para bordes de inputs */
+  --color-disabled-bg: color-mix(in srgb, var(--color-text) 6%, var(--color-surface));
+  --color-disabled-text: color-mix(in srgb, var(--color-text-muted) 55%, var(--color-surface));
+  --color-overlay: rgb(62 39 35 / 55%);
+
+  /* Radios, sombras, movimiento */
+  --radius-xs: 2px;
+  --radius-full: var(--radius-pill);
+  --shadow-xs: 0 1px 1px rgb(62 39 35 / 6%);
+  --shadow-xl: 0 20px 40px rgb(62 39 35 / 18%);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Layout y espaciado */
+  --space-0: 0;
+  --space-10: 2.5rem;
+  --space-12: 3rem;   /* corrige valor anterior (8rem) */
+  --space-16: 4rem;
+  --section-y: clamp(3rem, 2rem + 4vw, 6rem); /* corrige: ya no depende de --space-7/9 */
+  --container-wide: 87.5rem;
+  --header-height: 4rem; /* confirmar con la altura real del Navbar */
+  --texture-veta: none;
+}
 
 @media (min-width: 768px) {
   :root { --gutter: var(--space-5); }
 }
 @media (min-width: 1024px) {
   :root { --gutter: var(--space-6); }
-}
+} 

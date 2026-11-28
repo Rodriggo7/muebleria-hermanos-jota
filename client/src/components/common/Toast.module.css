@@ -1,7 +1,7 @@
 .container {
   position: fixed;
   right: var(--space-4);
-  bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0));
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
   left: var(--space-4);
   z-index: var(--z-toast);
   display: flex;
@@ -11,8 +11,7 @@
 }
 
 /* Toast individual */
-.toast {
-  --toast-accent: var(--color-info-500);
+.toast { --toast-accent: var(--color-bg); 
 
   display: flex;
   align-items: center;
@@ -21,7 +20,7 @@
   font-size: var(--text-sm);
   line-height: var(--leading-snug);
   color: var(--color-text-inverse);
-  background-color: var(--color-neutral-800);
+  background-color: var(--color-error);
   border-left: 4px solid var(--toast-accent);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
@@ -30,24 +29,16 @@
 }
 
 /* Variante éxito */
-.success {
-  --toast-accent: var(--color-success-500);
-}
+.success { --toast-accent: var(--color-secondary); }
 
 /* Variante error */
-.error {
-  --toast-accent: var(--color-error-500);
-}
+.error { --toast-accent: var(--color-rose); }
 
 /* Variante advertencia */
-.warning {
-  --toast-accent: var(--color-warning-500);
-}
+.warning { --toast-accent: var(--color-gold); }
 
 /* Variante información */
-.info {
-  --toast-accent: var(--color-info-500);
-}
+.info { --toast-accent: var(--color-bg); }
 
 /* Icono del toast, toma el color de acento */
 .icon {

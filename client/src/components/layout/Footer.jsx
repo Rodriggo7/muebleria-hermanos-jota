@@ -1,18 +1,13 @@
-import { Link } from 'react-router-dom';
 
-// TODO: reemplazar todos los textos entre [corchetes] por los datos reales de la mueblería.
+import { Link } from "react-router-dom";
+import "./Footer.css";
 
 const NAV_LINKS = [
-  { to: '/productos', label: 'Productos' },
-  { to: '/contacto', label: 'Contacto' },
+  { to: "/productos", label: "Productos" },
+  { to: "/contacto", label: "Contacto" },
 ];
 
-const SOCIAL_LINKS = [
-  { href: '#', label: '[completar red social 1 y su URL]', text: '[?]' },
-  { href: '#', label: '[completar red social 2 y su URL]', text: '[?]' },
-];
-
-function Footer() {
+export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
@@ -21,18 +16,12 @@ function Footer() {
         <div className="grid">
           <div className="brand">
             <p className="brandName">Hermanos Jota</p>
-            <p className="tagline">[completar descripción corta de la mueblería]</p>
-
-            <div className="social">
-              {SOCIAL_LINKS.map(({ href, label, text }) => (
-                <a key={label} href={href} className="socialLink" aria-label={label} title={label}>
-                  {text}
-                </a>
-              ))}
-            </div>
+            <p className="tagline">
+              Muebles para tu hogar, con calidad y estilo.
+            </p>
           </div>
 
-          <nav className="column" aria-label="Pie de página">
+          <nav className="column" aria-label="Navegación del pie de página">
             <h2 className="columnTitle">Navegación</h2>
             <ul className="list" role="list">
               {NAV_LINKS.map(({ to, label }) => (
@@ -44,31 +33,14 @@ function Footer() {
               ))}
             </ul>
           </nav>
-
-          <div className="column">
-            <h2 className="columnTitle">Contacto</h2>
-            <ul className="list" role="list">
-              <li>[completar dirección]</li>
-              <li>[completar teléfono]</li>
-              <li>[completar email]</li>
-            </ul>
-          </div>
-
-          <div className="column">
-            <h2 className="columnTitle">Horarios</h2>
-            <ul className="list" role="list">
-              <li>[completar días y horarios de atención]</li>
-            </ul>
-          </div>
         </div>
 
         <div className="bottom">
-          <p className="copy">© {year} Hermanos Jota</p>
-          <p className="copy">[completar texto legal o links legales]</p>
+          <p className="copy">
+            © {year} Mueblería Hermanos Jota. Todos los derechos reservados.
+          </p>
         </div>
       </div>
     </footer>
   );
 }
-
-export default Footer;
