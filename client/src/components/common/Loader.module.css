@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(250, 246, 240, 0.75);
+  background-color: rgba(255, 253, 249, 75%);
 }
 
 /* Pantalla completa bloqueante */

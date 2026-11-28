@@ -1,0 +1,78 @@
+import { useState } from "react";
+import styles from "./Navbar.css";
+import Icon from "../common/Icon";
+import cx from "../../utils/cx";
+
+/**
+ * Barra de navegación
+ * Props:
+ *  - brandName, brandHref, logoSrc (opcional)
+ *  - links: [{ label, href, active }]
+ *  - cartHref, cartCount
+ *  - accountLabel, accountHref   (ej: "Ingresar" o el nombre del usuario)
+ * El único estado interno es si el menú móvil está abierto (puramente visual).
+ * Requiere un <main id="main"> en la página para que funcione el enlace "Saltar al contenido".
+ */
+export default function Navbar({
+  brandName = "Hermanos Jota",
+  brandHref = "#",
+  logoSrc,
+  links = [],
+  cartHref = "#",
+  cartCount = 0,
+  accountLabel = "Ingresar",
+  accountHref = "#",
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <header className={styles.header}>
+      <a className="skip-link" href="#main">
+        Saltar al contenido
+      </a>
+      <div className={styles.inner}>
+        <a className={styles.brand} href={brandHref}>
+          {logoSrc ? <img className={styles.brandLogo} src={logoSrc} alt="" /> : null}
+          <span>{brandName}</span>
+        </a>
+
+        <nav className={cx(styles.nav, open && styles.navOpen)} id="menu-principal" aria-label="Principal">
+          <ul className={styles.navList}>
+            {links.map((link) => (
+              <li key={link.href + link.label}>
+                <a
+                  href={link.href}
+                  className={cx(styles.navLink, link.active && styles.navLinkActive)}
+                  aria-current={link.active ? "page" : undefined}
+                 >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className={styles.actions}>
+          <a className={styles.actionLink} href={accountHref}>
+            <Icon name="user" className={styles.icon} />
+            <span className={styles.actionText}>{accountLabel}</span>
+          </a>
+          <a className={cx(styles.actionLink, styles.cartLink)} href={cartHref} aria-label={`Carrito, ${cartCount} productos`}>
+            <Icon name="cart" className={styles.icon} />
+            {cartCount > 0 ? <span className={styles.cartCount}>{cartCount}</span> : null}
+          </a>
+          <button
+            type="button"
+            className={styles.menuToggle}
+            aria-expanded={open}
+            aria-controls="menu-principal"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            <Icon name={open ? "close" : "menu"} className={styles.icon} />
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}
